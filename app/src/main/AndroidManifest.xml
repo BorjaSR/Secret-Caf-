@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="es.bsalazar.secretcafe">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:icon="@mipmap/secret_icon_app"
+        android:label="@string/secret_cafe_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:allowBackup="false"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity
+            android:name=".app.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".app.drinks.admin_drink.AddUpdateDrinkActivity"
+            android:label="@string/title_activity_create_drink"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".app.meals.admin_meal.AddUpdateMealActivity"
+            android:label="@string/title_activity_create_meal"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".app.events.admin_event.AddUpdateEventActivity"
+            android:label="@string/title_activity_create_event"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".app.offers.admin_offers.AddUpdateOfferActivity"
+            android:label="@string/title_activity_create_offer"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".app.about.WhoWeAreActivity"
+            android:label="@string/title_activity_who_we_are"
+            android:theme="@style/AppTheme" />
+
+        <activity android:name=".app.about.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <service android:name=".app.GeofenceService"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA4qJrLSXJKKIvxAEwNbgQyxZhuF3-WvN8" />
+    </application>
+
+</manifest>

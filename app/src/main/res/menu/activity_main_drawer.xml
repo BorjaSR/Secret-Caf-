@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_drinks"
+            android:icon="@drawable/cocktail"
+            android:title="Bebidas" />
+        <item
+            android:id="@+id/nav_events"
+            android:icon="@drawable/calendar_event"
+            android:title="Eventos" />
+        <item
+            android:id="@+id/nav_sales"
+            android:icon="@drawable/sale"
+            android:title="Ofertas" />
+        <item
+            android:id="@+id/nav_food"
+            android:icon="@drawable/food"
+            android:title="Para comer" />
+    </group>
+
+    <item android:title="Nosotros">
+        <menu>
+            <item
+                android:id="@+id/nav_who_we_are"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Quienes somos?" />
+            <item
+                android:id="@+id/nav_about_us"
+                android:icon="@drawable/info"
+                android:title="Acerca de" />
+        </menu>
+    </item>
+
+</menu>

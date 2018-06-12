@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:gravity="bottom"
+    android:layout_gravity="bottom">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="bottom">
+
+
+        <LinearLayout
+            android:id="@+id/corner_down"
+            android:layout_width="105dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@drawable/background_category_item_inverse" />
+
+        <LinearLayout
+            android:id="@+id/background_down"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@color/colorAlphaAccent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:id="@+id/corner_up"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_category_item"
+            android:orientation="horizontal"/>
+
+        <TextView
+            android:id="@+id/category_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAlphaAccent"
+            android:gravity="center_vertical|end"
+            android:padding="8dp"
+            tools:text="My title"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

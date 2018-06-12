@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "109361196786",
+    "firebase_url": "https://secret-cafe.firebaseio.com",
+    "project_id": "secret-cafe",
+    "storage_bucket": "secret-cafe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109361196786:android:13adbbfc39e43aea",
+        "android_client_info": {
+          "package_name": "es.bsalazar.secretcafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109361196786-43bdl3b1aqvs7mpropiin8cjbrlqqfal.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.bsalazar.secretcafe",
+            "certificate_hash": "75cb014f724711abe671f0f42ce2de3efbc3b444"
+          }
+        },
+        {
+          "client_id": "109361196786-po4mluiq89i92rqdaqkhms3qft6mvn5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4qJrLSXJKKIvxAEwNbgQyxZhuF3-WvN8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109361196786-po4mluiq89i92rqdaqkhms3qft6mvn5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
