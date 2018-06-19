@@ -1,5 +1,6 @@
 package es.bsalazar.secretcafe.app.events;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
@@ -137,7 +138,7 @@ public class EventsFragment extends BaseFragment<EventsViewModel> implements Eve
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                viewModel.deleteEvent(adapter.getItem(viewHolder.getAdapterPosition()).getId());
+                showRemoveConfirmDialog(viewHolder.getAdapterPosition());
             }
         });
 
@@ -178,6 +179,20 @@ public class EventsFragment extends BaseFragment<EventsViewModel> implements Eve
 
     private void removeEventToList(FirebaseResponse<Event> response){
         adapter.removeEvent(response.getIndex(), response.getResponse());
+    }
+
+    private void showRemoveConfirmDialog(int itemPosition){
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle(getString(R.string.remove_confirm_dialog_title))
+                .setMessage(getString(R.string.remove_confirm_dialog_message))
+                .setPositiveButton(getString(R.string.continue_text), (dialogInterface, i) -> {
+                    viewModel.deleteEvent(adapter.getItem(itemPosition).getId());
+                })
+                .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    adapter.notifyItemChanged(itemPosition);
+                }).create();
+
+        alertDialog.show();
     }
 
     @Override

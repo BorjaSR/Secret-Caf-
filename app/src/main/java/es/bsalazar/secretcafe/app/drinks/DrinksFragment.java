@@ -1,6 +1,8 @@
 package es.bsalazar.secretcafe.app.drinks;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -141,8 +143,7 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                viewModel.deleteDrink(adapter.getItem(viewHolder.getAdapterPosition()).getId());
-//                adapter.removeItem(viewHolder.getAdapterPosition());
+                showRemoveConfirmDialog(viewHolder.getAdapterPosition());
             }
         });
 
@@ -184,10 +185,33 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
             showSnackbar("Hubo un error inesperado...");
     }
 
+    private void showRemoveConfirmDialog(int itemPosition){
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle(getString(R.string.remove_confirm_dialog_title))
+                .setMessage(getString(R.string.remove_confirm_dialog_message))
+                .setPositiveButton(getString(R.string.continue_text), (dialogInterface, i) -> {
+                    viewModel.deleteDrink(adapter.getItem(itemPosition).getId());
+                })
+                .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    adapter.notifyItemChanged(itemPosition);
+                }).create();
+
+        alertDialog.show();
+    }
+
     //region Implements DrinksListener
     @Override
     public void onClickDrinkListener(Drink drink) {
+        DrinkDetailFragmentDialog drinkDetailFragmentDialog = new DrinkDetailFragmentDialog();
 
+//        Bundle args = new Bundle();
+//        args.putInt("commentID", commentID);
+//        args.putBoolean("focus", needFocus);
+//        args.putString("likes", new Gson().toJson(likes));
+
+//        drinkDetailFragmentDialog.setArguments(args);
+
+        drinkDetailFragmentDialog.show(getFragmentManager(), "COMMENTS");
     }
 
     @Override

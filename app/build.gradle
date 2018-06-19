@@ -47,11 +47,11 @@ android {
     applicationVariants.all { variant ->
         if (variant.getName() == "userRelease") {
             variant.outputs.all { output ->
-                outputFileName = "SecretCafé-User-${variant.versionName}.${variant.versionCode}.apk"
+                outputFileName = "SecretCafé-User-${variant.versionName}_${variant.versionCode}.apk"
             }
         } else if (variant.getName() == "adminRelease") {
             variant.outputs.all { output ->
-                outputFileName = "SecretCafé-Admin-${variant.versionName}.${variant.versionCode}.apk"
+                outputFileName = "SecretCafé-Admin-${variant.versionName}_${variant.versionCode}.apk"
             }
         }
     }

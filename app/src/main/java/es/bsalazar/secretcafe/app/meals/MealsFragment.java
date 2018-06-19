@@ -1,5 +1,6 @@
 package es.bsalazar.secretcafe.app.meals;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
@@ -143,7 +144,7 @@ public class MealsFragment extends BaseFragment<MealsViewModel> implements Meals
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                viewModel.deleteMeal(adapter.getItem(viewHolder.getAdapterPosition()).getId());
+                showRemoveConfirmDialog(viewHolder.getAdapterPosition());
             }
         });
 
@@ -193,6 +194,20 @@ public class MealsFragment extends BaseFragment<MealsViewModel> implements Meals
             adapter.notifyDataSetChanged();
             Snackbar.make(recyclerView, getString(R.string.default_error), BaseTransientBottomBar.LENGTH_SHORT).show();
         }
+    }
+
+    private void showRemoveConfirmDialog(int itemPosition){
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle(getString(R.string.remove_confirm_dialog_title))
+                .setMessage(getString(R.string.remove_confirm_dialog_message))
+                .setPositiveButton(getString(R.string.continue_text), (dialogInterface, i) -> {
+                    viewModel.deleteMeal(adapter.getItem(itemPosition).getId());
+                })
+                .setNegativeButton(getString(R.string.cancel), (dialogInterface, i) -> {
+                    adapter.notifyItemChanged(itemPosition);
+                }).create();
+
+        alertDialog.show();
     }
 
     @Override

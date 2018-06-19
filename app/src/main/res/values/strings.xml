@@ -54,4 +54,9 @@
     <string name="secret_cafe_name">Secret Café</string>
     <string name="secret_address">Calle Ramón y Cajal, 43</string>
     <string name="administrator">Administrador</string>
+    <string name="transitionName_cardBackground">cardBackground_TN</string>
+    <string name="remove_confirm_dialog_title">¿Estás seguro?</string>
+    <string name="remove_confirm_dialog_message">Si continuas se eliminara de forma permanente</string>
+    <string name="continue_text">Continuar</string>
+    <string name="cancel">Cancelar</string>
 </resources>
