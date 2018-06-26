@@ -23,13 +23,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.bsalazar.secretcafe.BuildConfig;
 import es.bsalazar.secretcafe.R;
-import es.bsalazar.secretcafe.data.StorageManager;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Drink;
 
 public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemViewHolder> {
 
     public interface OnDrinkListener {
-        void onClickDrinkListener(Drink drink);
+        void onClickDrinkListener(View sharedView,View sharedImage, Drink drink);
 
         void onLongClickDrinkListener(Drink drink);
     }
@@ -69,7 +69,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
 
         holder.clickable_item.setOnClickListener(view -> {
             if (onDrinkListener != null)
-                onDrinkListener.onClickDrinkListener(drink);
+                onDrinkListener.onClickDrinkListener(holder.cv_item, holder.drink_image, drink);
         });
 
         if (BuildConfig.Admin) {
@@ -134,6 +134,8 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
     class DrinkItemViewHolder extends RecyclerView.ViewHolder {
 
         //region Views
+        @BindView(R.id.paco)
+        CardView cv_item;
         @BindView(R.id.clickable_item)
         FrameLayout clickable_item;
         @BindView(R.id.drink_image)

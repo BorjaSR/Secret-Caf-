@@ -1,8 +1,4 @@
-package es.bsalazar.secretcafe.data;
-
-/**
- * Created by borja.salazar on 18/04/2018.
- */
+package es.bsalazar.secretcafe.data.remote;
 
 public class FirebaseResponse<T> {
     private int index;

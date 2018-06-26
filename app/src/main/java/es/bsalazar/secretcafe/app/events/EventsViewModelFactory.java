@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import es.bsalazar.secretcafe.app.base.BaseViewModelFactory;
-import es.bsalazar.secretcafe.data.FirestoreManager;
+import es.bsalazar.secretcafe.data.remote.FirestoreManager;
 
 /**
  * Created by borja.salazar on 18/04/2018.

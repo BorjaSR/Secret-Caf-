@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -20,8 +19,8 @@ import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.MainActivity;
 import es.bsalazar.secretcafe.app.base.BaseFragment;
-import es.bsalazar.secretcafe.data.FirebaseResponse;
-import es.bsalazar.secretcafe.data.FirestoreManager;
+import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
+import es.bsalazar.secretcafe.data.remote.FirestoreManager;
 import es.bsalazar.secretcafe.data.entities.Category;
 import es.bsalazar.secretcafe.utils.ShowState;
 

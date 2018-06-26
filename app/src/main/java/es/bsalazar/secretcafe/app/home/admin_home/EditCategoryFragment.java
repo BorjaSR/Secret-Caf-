@@ -1,7 +1,6 @@
 package es.bsalazar.secretcafe.app.home.admin_home;
 
 import android.app.Activity;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,7 +12,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,7 +25,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.MediaStoreSignature;
@@ -38,13 +35,11 @@ import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.base.BaseFragment;
-import es.bsalazar.secretcafe.data.FirestoreManager;
-import es.bsalazar.secretcafe.data.StorageManager;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Category;
 import es.bsalazar.secretcafe.utils.CategoryTitleView;
 import es.bsalazar.secretcafe.utils.ResultState;

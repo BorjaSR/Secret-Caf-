@@ -1,15 +1,10 @@
-package es.bsalazar.secretcafe.data;
+package es.bsalazar.secretcafe.data.remote;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import es.bsalazar.secretcafe.BuildConfig;
 

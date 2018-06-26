@@ -2,11 +2,13 @@ package es.bsalazar.secretcafe.app.drinks;
 
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,11 +31,13 @@ import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.MainActivity;
 import es.bsalazar.secretcafe.app.drinks.admin_drink.AddUpdateDrinkActivity;
-import es.bsalazar.secretcafe.data.FirebaseResponse;
+import es.bsalazar.secretcafe.app.drinks.detail.DrinkDetailActivity;
+import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
 import es.bsalazar.secretcafe.data.entities.Drink;
 import es.bsalazar.secretcafe.app.base.BaseFragment;
-import es.bsalazar.secretcafe.utils.Constants;
 import es.bsalazar.secretcafe.utils.ResultState;
+
+import static es.bsalazar.secretcafe.utils.Constants.EXTRA_KEY_DRINK_ID;
 
 public class DrinksFragment extends BaseFragment<DrinksViewModel> implements DrinksAdapter.OnDrinkListener {
 
@@ -201,23 +205,38 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
 
     //region Implements DrinksListener
     @Override
-    public void onClickDrinkListener(Drink drink) {
-        DrinkDetailFragmentDialog drinkDetailFragmentDialog = new DrinkDetailFragmentDialog();
+    public void onClickDrinkListener(View sharedView, View sharedImage, Drink drink) {
+        animateIntent(sharedView, sharedImage, drink);
+    }
 
-//        Bundle args = new Bundle();
-//        args.putInt("commentID", commentID);
-//        args.putBoolean("focus", needFocus);
-//        args.putString("likes", new Gson().toJson(likes));
+    public void animateIntent(View card, View image, Drink drink) {
 
-//        drinkDetailFragmentDialog.setArguments(args);
+        // Ordinary Intent for launching a new activity
+        Intent intent = new Intent(getActivity(), DrinkDetailActivity.class);
 
-        drinkDetailFragmentDialog.show(getFragmentManager(), "COMMENTS");
+        //Set extras to the intent
+        Bundle args = new Bundle();
+        args.putString(EXTRA_KEY_DRINK_ID, drink.getId());
+        intent.putExtras(args);
+
+        // Get the transition name from the string
+        String transitionName = getString(R.string.transitionName_cardBackground);
+        String transitionName_image = getString(R.string.transitionName_image);
+
+        ActivityOptionsCompat multipleShared = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                Pair.create(card, transitionName),
+                Pair.create(image, transitionName_image))
+                ;
+
+        //Start the Intent
+        ActivityCompat.startActivity(getActivity(), intent, multipleShared.toBundle());
+
     }
 
     @Override
     public void onLongClickDrinkListener(Drink drink) {
         Intent intent = new Intent(getActivity(), AddUpdateDrinkActivity.class);
-        intent.putExtra(Constants.EXTRA_KEY_DRINK_ID, drink.getId());
+        intent.putExtra(EXTRA_KEY_DRINK_ID, drink.getId());
         startActivity(intent);
     }
     //endregion

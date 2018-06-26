@@ -34,7 +34,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
-import es.bsalazar.secretcafe.data.StorageManager;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Event;
 import es.bsalazar.secretcafe.utils.Constants;
 import es.bsalazar.secretcafe.utils.ResultState;

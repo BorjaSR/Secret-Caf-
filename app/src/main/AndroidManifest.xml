@@ -55,6 +55,10 @@
             android:label="@string/title_activity_who_we_are"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".app.drinks.detail.DrinkDetailActivity"
+            android:theme="@style/AppTheme.Transparent"/>
+
         <activity android:name=".app.about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 

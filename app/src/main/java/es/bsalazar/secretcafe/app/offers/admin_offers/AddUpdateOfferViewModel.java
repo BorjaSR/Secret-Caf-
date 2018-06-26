@@ -3,12 +3,9 @@ package es.bsalazar.secretcafe.app.offers.admin_offers;
 import android.arch.lifecycle.MutableLiveData;
 import android.net.Uri;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import es.bsalazar.secretcafe.app.base.BaseViewModel;
-import es.bsalazar.secretcafe.data.FirestoreManager;
-import es.bsalazar.secretcafe.data.StorageManager;
+import es.bsalazar.secretcafe.data.remote.FirestoreManager;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Offer;
 import es.bsalazar.secretcafe.utils.ResultState;
 import es.bsalazar.secretcafe.utils.ShowState;

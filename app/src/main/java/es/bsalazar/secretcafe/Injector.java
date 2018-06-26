@@ -1,7 +1,10 @@
 package es.bsalazar.secretcafe;
 
+import android.content.Context;
+
 import es.bsalazar.secretcafe.app.drinks.DrinksViewModelFactory;
 import es.bsalazar.secretcafe.app.drinks.admin_drink.AddUpdateDrinkViewModelFactory;
+import es.bsalazar.secretcafe.app.drinks.detail.DrinkDetailViewModelFactory;
 import es.bsalazar.secretcafe.app.events.EventsViewModelFactory;
 import es.bsalazar.secretcafe.app.events.admin_event.AddUpdateEventViewModelFactory;
 import es.bsalazar.secretcafe.app.home.HomeViewModelFactory;
@@ -10,12 +13,32 @@ import es.bsalazar.secretcafe.app.meals.MealsViewModelFactory;
 import es.bsalazar.secretcafe.app.meals.admin_meal.AddUpdateMealViewModelFactory;
 import es.bsalazar.secretcafe.app.offers.OffersViewModelFactory;
 import es.bsalazar.secretcafe.app.offers.admin_offers.AddUpdateOfferViewModelFactory;
-import es.bsalazar.secretcafe.data.FirestoreManager;
+import es.bsalazar.secretcafe.data.SecretRepository;
+import es.bsalazar.secretcafe.data.local.PreferencesManager;
+import es.bsalazar.secretcafe.data.remote.FirestoreManager;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 
 public class Injector {
 
+
+
+    private static SecretRepository provideSecretRepository(Context context){
+        return SecretRepository.getInstance(
+                provideFirestoreManager(),
+                provideStorageManager(),
+                providePreferencesManager(context));
+    }
+
     private static FirestoreManager provideFirestoreManager(){
         return FirestoreManager.getInstance();
+    }
+
+    private static StorageManager provideStorageManager(){
+        return StorageManager.getInstance();
+    }
+
+    private static PreferencesManager providePreferencesManager(Context context){
+        return PreferencesManager.getInstance(context);
     }
 
     public static EditCategoryViewModelFactory provideEditCategoryViewModelFactory(){
@@ -56,5 +79,9 @@ public class Injector {
 
     public static OffersViewModelFactory provideOffersViewModelFactory(){
         return new OffersViewModelFactory(provideFirestoreManager());
+    }
+
+    public static DrinkDetailViewModelFactory provideDrinkDetailViewModelFactory(Context context){
+        return new DrinkDetailViewModelFactory(provideSecretRepository(context), provideFirestoreManager());
     }
 }

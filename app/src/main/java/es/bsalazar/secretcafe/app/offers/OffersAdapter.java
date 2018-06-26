@@ -1,10 +1,7 @@
 package es.bsalazar.secretcafe.app.offers;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +15,6 @@ import com.bumptech.glide.signature.MediaStoreSignature;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -28,8 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.bsalazar.secretcafe.BuildConfig;
 import es.bsalazar.secretcafe.R;
-import es.bsalazar.secretcafe.data.StorageManager;
-import es.bsalazar.secretcafe.data.entities.Event;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Offer;
 
 public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OfferItemViewHolder> {

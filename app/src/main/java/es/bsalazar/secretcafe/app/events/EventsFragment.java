@@ -29,7 +29,7 @@ import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.MainActivity;
 import es.bsalazar.secretcafe.app.base.BaseFragment;
 import es.bsalazar.secretcafe.app.events.admin_event.AddUpdateEventActivity;
-import es.bsalazar.secretcafe.data.FirebaseResponse;
+import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
 import es.bsalazar.secretcafe.data.entities.Event;
 import es.bsalazar.secretcafe.utils.Constants;
 import es.bsalazar.secretcafe.utils.ShowState;

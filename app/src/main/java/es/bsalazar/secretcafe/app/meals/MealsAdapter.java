@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.bsalazar.secretcafe.BuildConfig;
 import es.bsalazar.secretcafe.R;
-import es.bsalazar.secretcafe.data.StorageManager;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Meal;
 
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealItemViewHolder> {

@@ -1,20 +1,11 @@
-package es.bsalazar.secretcafe.data;
+package es.bsalazar.secretcafe.data.remote;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +17,6 @@ import es.bsalazar.secretcafe.data.entities.Drink;
 import es.bsalazar.secretcafe.data.entities.Event;
 import es.bsalazar.secretcafe.data.entities.Meal;
 import es.bsalazar.secretcafe.data.entities.Offer;
-import es.bsalazar.secretcafe.utils.LogUtils;
-import es.bsalazar.secretcafe.utils.ResultState;
 
 /**
  * Created by borja.salazar on 16/03/2018.
@@ -243,6 +232,28 @@ public class FirestoreManager {
                         callback.onDocumentLoaded(null);
                     }
                 });
+    }
+
+    private MutableLiveData<Drink> drinkAsked = new MutableLiveData<Drink>(){};
+
+    public MutableLiveData<Drink> getDrinkv2(String drinkID) {
+        db.collection(DRINK_COLLECTION)
+                .document(drinkID)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+                            drinkAsked.setValue(new Drink(document.getId(), document));
+                        } else {
+                            drinkAsked.setValue(null);
+                        }
+                    } else {
+                        drinkAsked.setValue(null);
+                    }
+                });
+
+        return drinkAsked;
     }
 
     public void getMeal(String mealID, final OnDocumentLoadedListener<Meal> callback) {

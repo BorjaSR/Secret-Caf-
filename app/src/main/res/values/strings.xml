@@ -51,10 +51,11 @@
     <string name="event_removed">Evento eliminado</string>
     <string name="notif_title">Ya que estas cerca…</string>
     <string name="notif_msg">Por que no entras y tomas algo!</string>
-    <string name="secret_cafe_name">Secret Café</string>
+    <string name="secret_cafe_name">Secret Café &amp; Copas</string>
     <string name="secret_address">Calle Ramón y Cajal, 43</string>
     <string name="administrator">Administrador</string>
     <string name="transitionName_cardBackground">cardBackground_TN</string>
+    <string name="transitionName_image">image_TN</string>
     <string name="remove_confirm_dialog_title">¿Estás seguro?</string>
     <string name="remove_confirm_dialog_message">Si continuas se eliminara de forma permanente</string>
     <string name="continue_text">Continuar</string>

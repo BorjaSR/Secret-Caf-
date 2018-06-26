@@ -1,19 +1,10 @@
 package es.bsalazar.secretcafe.app.about;
 
-import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.signature.MediaStoreSignature;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import es.bsalazar.secretcafe.R;
-import es.bsalazar.secretcafe.data.StorageManager;
 
 public class WhoWeAreActivity extends AppCompatActivity {
 

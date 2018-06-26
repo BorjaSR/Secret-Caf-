@@ -3,7 +3,7 @@ package es.bsalazar.secretcafe.app.base;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import es.bsalazar.secretcafe.data.FirestoreManager;
+import es.bsalazar.secretcafe.data.remote.FirestoreManager;
 import es.bsalazar.secretcafe.utils.ShowState;
 
 public class BaseViewModel extends ViewModel {

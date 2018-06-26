@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_drink_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="30"
+    android:gravity="center"
+    android:clickable="true">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transitionName="@string/transitionName_cardBackground"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
+        android:layout_margin="5dp"
+        tools:targetApi="lollipop">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/image_drink_detail"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/legendario"
+                android:scaleType="centerCrop"
+                android:transitionName="@string/transitionName_image"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+
+                <es.bsalazar.secretcafe.utils.ImpactTextView
+                    android:id="@+id/name_drink_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_title_item"
+                    tools:text="Legendario"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/color_accent_gradient"/>
+
+                <TextView
+                    android:id="@+id/drink_description_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/white2"
+                    tools:text="@string/lorem_ipsum"/>
+
+                <es.bsalazar.secretcafe.utils.ImpactTextView
+                    android:id="@+id/drink_price_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_price_item"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="5dp"
+                    tools:text="6,50 €" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

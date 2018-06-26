@@ -2,14 +2,12 @@ package es.bsalazar.secretcafe.app.meals;
 
 import android.arch.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import es.bsalazar.secretcafe.app.base.BaseViewModel;
-import es.bsalazar.secretcafe.data.FirebaseResponse;
-import es.bsalazar.secretcafe.data.FirestoreManager;
-import es.bsalazar.secretcafe.data.StorageManager;
-import es.bsalazar.secretcafe.data.entities.Event;
+import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
+import es.bsalazar.secretcafe.data.remote.FirestoreManager;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Meal;
 import es.bsalazar.secretcafe.utils.ResultState;
 import es.bsalazar.secretcafe.utils.ShowState;

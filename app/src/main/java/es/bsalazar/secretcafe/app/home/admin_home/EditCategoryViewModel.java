@@ -4,8 +4,8 @@ import android.arch.lifecycle.MutableLiveData;
 import android.net.Uri;
 
 import es.bsalazar.secretcafe.app.base.BaseViewModel;
-import es.bsalazar.secretcafe.data.FirestoreManager;
-import es.bsalazar.secretcafe.data.StorageManager;
+import es.bsalazar.secretcafe.data.remote.FirestoreManager;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Category;
 import es.bsalazar.secretcafe.utils.ResultState;
 import es.bsalazar.secretcafe.utils.ShowState;
