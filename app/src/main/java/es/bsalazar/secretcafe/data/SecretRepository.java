@@ -2,6 +2,8 @@ package es.bsalazar.secretcafe.data;
 
 import android.arch.lifecycle.MutableLiveData;
 
+import com.google.firebase.storage.StorageReference;
+
 import es.bsalazar.secretcafe.data.entities.Drink;
 import es.bsalazar.secretcafe.data.local.PreferencesManager;
 import es.bsalazar.secretcafe.data.remote.FirestoreManager;
@@ -27,7 +29,7 @@ public class SecretRepository {
         return instance;
     }
 
-    public SecretRepository(FirestoreManager firestoreManager, StorageManager storageManager, PreferencesManager preferencesManager) {
+    private SecretRepository(FirestoreManager firestoreManager, StorageManager storageManager, PreferencesManager preferencesManager) {
         this.firestoreManager = firestoreManager;
         this.storageManager = storageManager;
         this.preferencesManager = preferencesManager;
@@ -45,4 +47,12 @@ public class SecretRepository {
     private long getGeoNotificationTimestamp(){
         return preferencesManager.getGeoNotificationTimestamp();
     }
+
+    //region Images references
+
+    public StorageReference getDrinkImageReference(String drinkID){
+        return storageManager.getReferenceToDrinkImage(drinkID);
+    }
+
+    //endregion
 }

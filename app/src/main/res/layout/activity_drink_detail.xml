@@ -12,7 +12,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:transitionName="@string/transitionName_cardBackground"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="4dp"
@@ -22,7 +22,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
 
@@ -30,13 +30,13 @@
                 android:id="@+id/image_drink_detail"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:src="@drawable/legendario"
+                android:src="@drawable/default_image"
                 android:scaleType="centerCrop"
                 android:transitionName="@string/transitionName_image"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="16dp"
                 android:orientation="vertical">
 
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize_title_item"
-                    tools:text="Legendario"/>
+                    android:text=""/>
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -56,11 +56,12 @@
 
                 <TextView
                     android:id="@+id/drink_description_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/white2"
-                    tools:text="@string/lorem_ipsum"/>
+                    android:text=""/>
 
                 <es.bsalazar.secretcafe.utils.ImpactTextView
                     android:id="@+id/drink_price_detail"
@@ -70,7 +71,7 @@
                     android:textSize="@dimen/textSize_price_item"
                     android:layout_gravity="end"
                     android:layout_marginTop="5dp"
-                    tools:text="6,50 €" />
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>

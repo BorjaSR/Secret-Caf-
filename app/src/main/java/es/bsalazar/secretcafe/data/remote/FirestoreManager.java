@@ -234,9 +234,10 @@ public class FirestoreManager {
                 });
     }
 
-    private MutableLiveData<Drink> drinkAsked = new MutableLiveData<Drink>(){};
 
     public MutableLiveData<Drink> getDrinkv2(String drinkID) {
+        MutableLiveData<Drink> drinkAsked = new MutableLiveData<Drink>(){};
+
         db.collection(DRINK_COLLECTION)
                 .document(drinkID)
                 .get()

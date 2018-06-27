@@ -3,6 +3,8 @@ package es.bsalazar.secretcafe.app.drinks;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,8 +23,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,8 +39,12 @@ import es.bsalazar.secretcafe.app.drinks.detail.DrinkDetailActivity;
 import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
 import es.bsalazar.secretcafe.data.entities.Drink;
 import es.bsalazar.secretcafe.app.base.BaseFragment;
+import es.bsalazar.secretcafe.data.remote.StorageManager;
+import es.bsalazar.secretcafe.utils.GetImageFromStorageReference;
+import es.bsalazar.secretcafe.utils.LogUtils;
 import es.bsalazar.secretcafe.utils.ResultState;
 
+import static es.bsalazar.secretcafe.utils.Constants.EXTRA_KEY_BYTE_ARRAY;
 import static es.bsalazar.secretcafe.utils.Constants.EXTRA_KEY_DRINK_ID;
 
 public class DrinksFragment extends BaseFragment<DrinksViewModel> implements DrinksAdapter.OnDrinkListener {
@@ -170,26 +178,26 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
         adapter.setDrinks(drinkList);
     }
 
-    private void addDrinkToList(FirebaseResponse<Drink> response){
+    private void addDrinkToList(FirebaseResponse<Drink> response) {
         adapter.addDrink(response.getIndex(), response.getResponse());
     }
 
-    private void modifyDrinkToList(FirebaseResponse<Drink> response){
+    private void modifyDrinkToList(FirebaseResponse<Drink> response) {
         adapter.modifyDrink(response.getIndex(), response.getResponse());
     }
 
-    private void removeDrinkToList(FirebaseResponse<Drink> response){
+    private void removeDrinkToList(FirebaseResponse<Drink> response) {
         adapter.removeDrink(response.getIndex(), response.getResponse());
     }
 
     private void handlerDeleteResult(ResultState resultState) {
         if (resultState == ResultState.OK) {
             showSnackbar("Bebida eliminada");
-        } else if(resultState == ResultState.KO)
+        } else if (resultState == ResultState.KO)
             showSnackbar("Hubo un error inesperado...");
     }
 
-    private void showRemoveConfirmDialog(int itemPosition){
+    private void showRemoveConfirmDialog(int itemPosition) {
         final AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                 .setTitle(getString(R.string.remove_confirm_dialog_title))
                 .setMessage(getString(R.string.remove_confirm_dialog_message))
@@ -214,9 +222,41 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
         // Ordinary Intent for launching a new activity
         Intent intent = new Intent(getActivity(), DrinkDetailActivity.class);
 
-        //Set extras to the intent
+//        new GetImageFromStorageReference(mContext,
+//                StorageManager.getInstance().getReferenceToDrinkImage(drink.getId()),
+//                drink.getDateImageUpdate(),
+//                bitmap -> {
+//
+//                    Bundle args = new Bundle();
+//
+//                    if (bitmap != null){
+//                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//                        byte[] byteArray = stream.toByteArray();
+//                        args.putByteArray(EXTRA_KEY_BYTE_ARRAY, byteArray);
+//                    }
+//                    //Set extras to the intent
+//                    args.putString(EXTRA_KEY_DRINK_ID, drink.getId());
+//                    intent.putExtras(args);
+//
+//                    // Get the transition name from the string
+//                    String transitionName = getString(R.string.transitionName_cardBackground);
+//                    String transitionName_image = getString(R.string.transitionName_image);
+//
+//                    ActivityOptionsCompat multipleShared = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+//                            Pair.create(card, transitionName),
+//                            Pair.create(image, transitionName_image));
+//
+//                    //Start the Intent
+//                    ActivityCompat.startActivity(getActivity(), intent, multipleShared.toBundle());
+//                }).execute();
+
+
         Bundle args = new Bundle();
+
+        //Set extras to the intent
         args.putString(EXTRA_KEY_DRINK_ID, drink.getId());
+        args.putByteArray(EXTRA_KEY_BYTE_ARRAY, getByteArrayFromImageView((ImageView) image));
         intent.putExtras(args);
 
         // Get the transition name from the string
@@ -225,12 +265,10 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
 
         ActivityOptionsCompat multipleShared = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 Pair.create(card, transitionName),
-                Pair.create(image, transitionName_image))
-                ;
+                Pair.create(image, transitionName_image));
 
         //Start the Intent
         ActivityCompat.startActivity(getActivity(), intent, multipleShared.toBundle());
-
     }
 
     @Override
@@ -239,5 +277,30 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
         intent.putExtra(EXTRA_KEY_DRINK_ID, drink.getId());
         startActivity(intent);
     }
+
     //endregion
+
+
+    public static byte[] getByteArrayFromImageView(ImageView imageView) {
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap bitmap = null;
+
+        try {
+            BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageView.getDrawable());
+            if (bitmapDrawable != null)
+                bitmap = bitmapDrawable.getBitmap();
+
+        } catch (Exception e) {
+            imageView.buildDrawingCache();
+            bitmap = imageView.getDrawingCache();
+            imageView.buildDrawingCache(false);
+        }
+
+        if (bitmap != null) {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            return stream.toByteArray();
+        } else
+            return null;
+    }
 }
