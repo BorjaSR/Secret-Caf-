@@ -8,8 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +36,7 @@ import es.bsalazar.secretcafe.data.entities.Drink;
 public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemViewHolder> {
 
     public interface OnDrinkListener {
-        void onClickDrinkListener(View sharedView,View sharedImage, Drink drink);
+        void onClickDrinkListener(Drink drink, View... sharedViews);
 
         void onLongClickDrinkListener(Drink drink);
     }
@@ -69,9 +74,36 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
         NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(new Locale("es", "ES"));
         holder.drink_price.setText(formatoImporte.format(drink.getPrice()));
 
-        holder.clickable_item.setOnClickListener(view -> {
-            if (onDrinkListener != null)
-                onDrinkListener.onClickDrinkListener(holder.cv_item, holder.drink_image, drink);
+        holder.clickable_item.setOnClickListener((View view) -> {
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate_up_right);
+            animation.setFillAfter(true);
+            animation.setInterpolator(new AccelerateInterpolator());
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (onDrinkListener != null)
+                        onDrinkListener.onClickDrinkListener(drink,
+                                holder.cv_item,
+                                holder.drink_image);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+            holder.shadow.startAnimation(animation);
+
+//                    if (onDrinkListener != null)
+//                        onDrinkListener.onClickDrinkListener(drink,
+//                                holder.cv_item,
+//                                holder.drink_image);
         });
 
         if (BuildConfig.Admin) {
@@ -148,6 +180,10 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
         TextView drink_description;
         @BindView(R.id.drink_price)
         TextView drink_price;
+        @BindView(R.id.embellisher)
+        FrameLayout embellisher;
+        @BindView(R.id.image_shadow)
+        LinearLayout shadow;
         //endregion
 
         DrinkItemViewHolder(View itemView) {

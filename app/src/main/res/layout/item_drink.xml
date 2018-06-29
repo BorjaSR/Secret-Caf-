@@ -32,6 +32,8 @@
                 android:transitionName="@string/transitionName_image"/>
 
             <LinearLayout
+                android:id="@+id/image_shadow"
+                android:orientation="vertical"
                 android:layout_width="18dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
@@ -79,6 +81,7 @@
             </LinearLayout>
 
             <FrameLayout
+                android:id="@+id/embellisher"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@drawable/color_accent_gradient"/>
@@ -103,6 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:selectableItemBackground"
+        android:transitionName="@string/transitionName_price"
         android:clickable="true"
         android:focusable="true" />
 

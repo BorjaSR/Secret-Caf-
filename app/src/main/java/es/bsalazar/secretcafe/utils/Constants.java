@@ -7,4 +7,6 @@ public class Constants {
     public static final String EXTRA_KEY_MEAL_ID  = "meal_id";
     public static final String EXTRA_KEY_OFFER_ID  = "offer_id";
     public static final String EXTRA_KEY_BYTE_ARRAY  = "byte_array";
+
+    public static final String EXTRA_KEY_DRINK  = "DRINK";
 }

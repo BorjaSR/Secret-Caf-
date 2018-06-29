@@ -1,5 +1,6 @@
 package es.bsalazar.secretcafe.app.drinks;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -34,17 +35,14 @@ import es.bsalazar.secretcafe.BuildConfig;
 import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.MainActivity;
+import es.bsalazar.secretcafe.app.base.BaseFragment;
 import es.bsalazar.secretcafe.app.drinks.admin_drink.AddUpdateDrinkActivity;
 import es.bsalazar.secretcafe.app.drinks.detail.DrinkDetailActivity;
-import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
 import es.bsalazar.secretcafe.data.entities.Drink;
-import es.bsalazar.secretcafe.app.base.BaseFragment;
-import es.bsalazar.secretcafe.data.remote.StorageManager;
-import es.bsalazar.secretcafe.utils.GetImageFromStorageReference;
-import es.bsalazar.secretcafe.utils.LogUtils;
+import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
+import es.bsalazar.secretcafe.utils.Constants;
 import es.bsalazar.secretcafe.utils.ResultState;
 
-import static es.bsalazar.secretcafe.utils.Constants.EXTRA_KEY_BYTE_ARRAY;
 import static es.bsalazar.secretcafe.utils.Constants.EXTRA_KEY_DRINK_ID;
 
 public class DrinksFragment extends BaseFragment<DrinksViewModel> implements DrinksAdapter.OnDrinkListener {
@@ -213,59 +211,21 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
 
     //region Implements DrinksListener
     @Override
-    public void onClickDrinkListener(View sharedView, View sharedImage, Drink drink) {
-        animateIntent(sharedView, sharedImage, drink);
+    public void onClickDrinkListener(Drink drink, View... sharedViews) {
+        animateIntent(drink, sharedViews);
     }
 
-    public void animateIntent(View card, View image, Drink drink) {
+    public void animateIntent(Drink drink, View... sharedViews) {
 
         // Ordinary Intent for launching a new activity
         Intent intent = new Intent(getActivity(), DrinkDetailActivity.class);
-
-//        new GetImageFromStorageReference(mContext,
-//                StorageManager.getInstance().getReferenceToDrinkImage(drink.getId()),
-//                drink.getDateImageUpdate(),
-//                bitmap -> {
-//
-//                    Bundle args = new Bundle();
-//
-//                    if (bitmap != null){
-//                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//                        byte[] byteArray = stream.toByteArray();
-//                        args.putByteArray(EXTRA_KEY_BYTE_ARRAY, byteArray);
-//                    }
-//                    //Set extras to the intent
-//                    args.putString(EXTRA_KEY_DRINK_ID, drink.getId());
-//                    intent.putExtras(args);
-//
-//                    // Get the transition name from the string
-//                    String transitionName = getString(R.string.transitionName_cardBackground);
-//                    String transitionName_image = getString(R.string.transitionName_image);
-//
-//                    ActivityOptionsCompat multipleShared = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-//                            Pair.create(card, transitionName),
-//                            Pair.create(image, transitionName_image));
-//
-//                    //Start the Intent
-//                    ActivityCompat.startActivity(getActivity(), intent, multipleShared.toBundle());
-//                }).execute();
-
-
-        Bundle args = new Bundle();
-
-        //Set extras to the intent
-        args.putString(EXTRA_KEY_DRINK_ID, drink.getId());
-        args.putByteArray(EXTRA_KEY_BYTE_ARRAY, getByteArrayFromImageView((ImageView) image));
-        intent.putExtras(args);
-
-        // Get the transition name from the string
-        String transitionName = getString(R.string.transitionName_cardBackground);
-        String transitionName_image = getString(R.string.transitionName_image);
+        intent.putExtra(Constants.EXTRA_KEY_DRINK, drink);
+        intent.putExtra(Constants.EXTRA_KEY_BYTE_ARRAY, getByteArrayFromImageView((ImageView) sharedViews[1]));
 
         ActivityOptionsCompat multipleShared = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                Pair.create(card, transitionName),
-                Pair.create(image, transitionName_image));
+                Pair.create(sharedViews[0], getString(R.string.transitionName_cardBackground)),
+                Pair.create(sharedViews[1], getString(R.string.transitionName_image))
+        );
 
         //Start the Intent
         ActivityCompat.startActivity(getActivity(), intent, multipleShared.toBundle());
@@ -281,6 +241,7 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
     //endregion
 
 
+    @TargetApi(Build.VERSION_CODES.DONUT)
     public static byte[] getByteArrayFromImageView(ImageView imageView) {
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

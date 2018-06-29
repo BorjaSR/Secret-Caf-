@@ -5,76 +5,104 @@
     android:id="@+id/container_drink_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="30"
+    android:clickable="true"
     android:gravity="center"
-    android:clickable="true">
+    android:orientation="vertical"
+    android:weightSum="30">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="400dp"
+        android:layout_margin="5dp"
         android:transitionName="@string/transitionName_cardBackground"
         app:cardBackgroundColor="@color/colorPrimary"
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp"
-        android:layout_margin="5dp"
         tools:targetApi="lollipop">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <ImageView
                 android:id="@+id/image_drink_detail"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/default_image"
+                android:layout_height="@dimen/height_image_detail"
                 android:scaleType="centerCrop"
-                android:transitionName="@string/transitionName_image"/>
+                android:src="@drawable/default_image"
+                android:transitionName="@string/transitionName_image" />
 
-            <LinearLayout
+            <com.amar.library.ui.StickyScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-
-                <es.bsalazar.secretcafe.utils.ImpactTextView
-                    android:id="@+id/name_drink_detail"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_title_item"
-                    android:text=""/>
+                    android:orientation="vertical">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@drawable/color_accent_gradient"/>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_image_detail" />
 
-                <TextView
-                    android:id="@+id/drink_description_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/white2"
-                    android:text=""/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
-                <es.bsalazar.secretcafe.utils.ImpactTextView
-                    android:id="@+id/drink_price_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_price_item"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="5dp"
-                    android:text="" />
+                        <es.bsalazar.secretcafe.utils.ImpactTextView
+                            android:id="@+id/name_drink_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/textSize_title_item"
+                            android:transitionName="@string/transitionName_name"
+                            tools:text="Legendario" />
 
-            </LinearLayout>
-        </LinearLayout>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@drawable/color_accent_gradient"
+                            android:transitionName="@string/transitionName_embellisher" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <TextView
+                            android:id="@+id/drink_description_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/white2"
+                            android:transitionName="@string/transitionName_description"
+                            android:text="@string/lorem_ipsum" />
+
+                        <es.bsalazar.secretcafe.utils.ImpactTextView
+                            android:id="@+id/drink_price_detail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/textSize_price_item"
+                            android:transitionName="@string/transitionName_price"
+                            tools:text="5,50 €" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </com.amar.library.ui.StickyScrollView>
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 </LinearLayout>

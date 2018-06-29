@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,28 +44,28 @@ public class DrinkDetailActivity extends AppCompatActivity {
 
     private Unbinder unbinder;
     private DrinkDetailViewModel viewModel;
-    private String drinkID;
+    private Drink drink;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drink_detail);
+
         unbinder = ButterKnife.bind(this);
 
-        if (getIntent().getExtras() != null) {
-            drinkID = getIntent().getExtras().getString(Constants.EXTRA_KEY_DRINK_ID, null);
-            byte[] byteArray = getIntent().getExtras().getByteArray(Constants.EXTRA_KEY_BYTE_ARRAY);
+        drink = (Drink) getIntent().getSerializableExtra("DRINK");
+        byte[] byteArray = getIntent().getByteArrayExtra(Constants.EXTRA_KEY_BYTE_ARRAY);
 
-            if(byteArray != null){
-                Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-                image.setImageBitmap(bmp);
-            } else
-                image.setImageDrawable(getDrawable(R.drawable.default_image));
-        }
+        if (byteArray != null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            image.setImageBitmap(bmp);
+        } else
+            image.setImageDrawable(getDrawable(R.drawable.default_image));
 
         setupViewModel();
         observeViewModel();
+        setView();
     }
 
     @OnClick(R.id.container_drink_detail)
@@ -86,7 +87,6 @@ public class DrinkDetailActivity extends AppCompatActivity {
 
     public void observeViewModel() {
         viewModel.getLoadingProgress().observe(this, this::toogleLoadingProgress);
-        viewModel.getDrink(drinkID).observe(this, this::setView);
     }
 
     private void toogleLoadingProgress(ShowState showState) {
@@ -96,18 +96,11 @@ public class DrinkDetailActivity extends AppCompatActivity {
 //            progress.setVisibility(View.GONE);
     }
 
-    private void setView(Drink drink) {
-        if(drink != null){
-
-//            Glide.with(this)
-//                    .using(new FirebaseImageLoader())
-//                    .load(StorageManager.getInstance().getReferenceToDrinkImage(drink.getId()))
-//                    .signature(new MediaStoreSignature("", drink.getDateImageUpdate(), 0))
-//                    .placeholder(R.drawable.default_image)
-//                    .into(image);
+    private void setView() {
+        if (drink != null) {
 
             name.setText(drink.getName());
-            description.setText(drink.getDescription());
+//            description.setText(drink.getDescription());
             NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(new Locale("es", "ES"));
             price.setText(formatoImporte.format(drink.getPrice()));
         }
