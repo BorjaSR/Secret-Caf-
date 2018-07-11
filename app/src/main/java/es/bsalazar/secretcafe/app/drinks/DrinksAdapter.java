@@ -78,32 +78,32 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate_up_right);
             animation.setFillAfter(true);
             animation.setInterpolator(new AccelerateInterpolator());
-            animation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    if (onDrinkListener != null)
-                        onDrinkListener.onClickDrinkListener(drink,
-                                holder.cv_item,
-                                holder.drink_image);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-
-            holder.shadow.startAnimation(animation);
-
+//            animation.setAnimationListener(new Animation.AnimationListener() {
+//                @Override
+//                public void onAnimationStart(Animation animation) {
+//
+//                }
+//
+//                @Override
+//                public void onAnimationEnd(Animation animation) {
 //                    if (onDrinkListener != null)
 //                        onDrinkListener.onClickDrinkListener(drink,
 //                                holder.cv_item,
 //                                holder.drink_image);
+//                }
+//
+//                @Override
+//                public void onAnimationRepeat(Animation animation) {
+//
+//                }
+//            });
+//
+//            holder.shadow.startAnimation(animation);
+
+            if (onDrinkListener != null)
+                onDrinkListener.onClickDrinkListener(drink,
+                        holder.cv_item,
+                        holder.drink_image);
         });
 
         if (BuildConfig.Admin) {
@@ -154,7 +154,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
         return false;
     }
 
-    Drink getItem(int index){
+    Drink getItem(int index) {
         return drinks.get(index);
     }
 
@@ -168,7 +168,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
     class DrinkItemViewHolder extends RecyclerView.ViewHolder {
 
         //region Views
-        @BindView(R.id.paco)
+        @BindView(R.id.cv_item)
         CardView cv_item;
         @BindView(R.id.clickable_item)
         FrameLayout clickable_item;

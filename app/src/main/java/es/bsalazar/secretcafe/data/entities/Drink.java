@@ -5,10 +5,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.io.Serializable;
 import java.util.HashMap;
 
-/**
- * Created by borja.salazar on 16/03/2018.
- */
-
 public class Drink implements Serializable {
 
     private String Id;

@@ -44,7 +44,7 @@ public class SecretRepository {
         preferencesManager.setGeoNotificationTimestamp(timestamp);
     }
 
-    private long getGeoNotificationTimestamp(){
+    public long getGeoNotificationTimestamp(){
         return preferencesManager.getGeoNotificationTimestamp();
     }
 

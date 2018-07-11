@@ -9,4 +9,5 @@ public class Constants {
     public static final String EXTRA_KEY_BYTE_ARRAY  = "byte_array";
 
     public static final String EXTRA_KEY_DRINK  = "DRINK";
+    public static final String EXTRA_KEY_MEAL  = "MEAL";
 }

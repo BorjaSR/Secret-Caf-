@@ -3,6 +3,7 @@ package es.bsalazar.secretcafe.app.meals;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealItemView
         holder.meal_price.setText(formatoImporte.format(meal.getPrice()));
         holder.meal_description.setText(meal.getDescription());
 
-        holder.clickable_item.setOnClickListener(view -> onMealClickListener.onClickMealListener(meal));
+        holder.clickable_item.setOnClickListener(view -> onMealClickListener.onClickMealListener(meal, holder.cv_item, holder.meal_image));
 
         if (BuildConfig.Admin)
             holder.clickable_item.setOnLongClickListener(view -> {
@@ -117,19 +118,14 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealItemView
         return false;
     }
 
-    void updateList(List<Meal> newList) {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new MyDiffCallback(this.meals, newList));
-
-        this.meals = newList;
-        diffResult.dispatchUpdatesTo(this);
-    }
-
     /**
      * ViewHolder representation of a Meal
      */
     class MealItemViewHolder extends RecyclerView.ViewHolder {
 
         //region Views
+        @BindView(R.id.cv_item)
+        CardView cv_item;
         @BindView(R.id.clickable_item)
         FrameLayout clickable_item;
         @BindView(R.id.meal_image)
@@ -149,52 +145,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealItemView
     }
 
     public interface OnMealClickListener {
-        void onClickMealListener(Meal meal);
+        void onClickMealListener(Meal meal, View... sharedViews);
 
         void onLongClickMealListener(Meal meal);
-    }
-
-    public class MyDiffCallback extends DiffUtil.Callback{
-
-        List<Meal> oldMeals;
-        List<Meal> newMeals;
-
-        MyDiffCallback(List<Meal> newMeals, List<Meal> oldMeals) {
-            this.newMeals = newMeals;
-            this.oldMeals = oldMeals;
-        }
-
-        @Override
-        public int getOldListSize() {
-            return oldMeals.size();
-        }
-
-        @Override
-        public int getNewListSize() {
-            return newMeals.size();
-        }
-
-        @Override
-        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-            return oldMeals.get(oldItemPosition).getId().equals(newMeals.get(newItemPosition).getId());
-        }
-
-        @Override
-        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-            Meal oldMeal = oldMeals.get(oldItemPosition);
-            Meal newMeal = newMeals.get(newItemPosition);
-
-            return !(oldMeal.getDateImageUpdate() != newMeal.getDateImageUpdate() ||
-                    !oldMeal.getDescription().equals(newMeal.getDescription()) ||
-                    !oldMeal.getName().equals(newMeal.getName()) ||
-                    oldMeal.getPrice() != newMeal.getPrice());
-        }
-
-        @Nullable
-        @Override
-        public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-            //you can return particular field for changed item.
-            return super.getChangePayload(oldItemPosition, newItemPosition);
-        }
     }
 }

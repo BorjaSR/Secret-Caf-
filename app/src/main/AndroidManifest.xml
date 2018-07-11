@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
 
+        <!--ADD & UPDATE ACTIVITIES-->
         <activity
             android:name=".app.drinks.admin_drink.AddUpdateDrinkActivity"
             android:label="@string/title_activity_create_drink"
@@ -51,17 +52,22 @@
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme" />
 
+        <!--SOCIAL ACTIVITIES-->
         <activity
             android:name=".app.about.WhoWeAreActivity"
             android:label="@string/title_activity_who_we_are"
             android:theme="@style/AppTheme" />
 
+        <activity android:name=".app.about.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!--DETAIL ACTICITIES-->
         <activity
             android:name=".app.drinks.detail.DrinkDetailActivity"
             android:theme="@style/AppTheme.Transparent"/>
-
-        <activity android:name=".app.about.AboutActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".app.meals.detail.MealDetailActivity"
+            android:theme="@style/AppTheme.Transparent"/>
 
         <service android:name=".app.GeofenceService"/>
 

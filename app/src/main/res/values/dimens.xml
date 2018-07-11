@@ -11,6 +11,6 @@
     <dimen name="imageSize_drink_item">110dp</dimen>
     <dimen name="textSize_title_item">18sp</dimen>
     <dimen name="textSize_price_item">22sp</dimen>
-    <dimen name="height_image_detail">150dp</dimen>
+    <dimen name="height_image_detail">175dp</dimen>
 
 </resources>

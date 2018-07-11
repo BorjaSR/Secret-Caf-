@@ -9,17 +9,22 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.util.StateSet;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 
 import java.util.List;
 
+import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
+import es.bsalazar.secretcafe.data.SecretRepository;
 
 public class GeofenceService extends IntentService {
 
     private final String TAG = "GEOFENCE SERVICE";
+    private final long ONE_DAY = 24 * 60 * 60 * 1000;
+    private SecretRepository secretRepository;
 
     public GeofenceService() {
         super("GEOFENCE SERVICE");
@@ -70,31 +75,33 @@ public class GeofenceService extends IntentService {
         }
     }
 
-    private void sendNotification(String title, String subtitle) {
-        sendNotification(0x1234, title, subtitle);
-    }
-
     private void sendNotification(int id, String title, String subtitle) {
+        secretRepository = Injector.provideSecretRepository(getApplicationContext());
+        long lastNotifDate = secretRepository.getGeoNotificationTimestamp();
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            Intent notificationIntent = new Intent(this, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 100, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            if(lastNotifDate + ONE_DAY < System.currentTimeMillis()){
+                Intent notificationIntent = new Intent(this, MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, 100, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
-            //NOTIFICATION
-            Notification notification = null;
-            notification = new Notification.Builder(this)
-                    .setContentTitle(title)
-                    .setContentText(subtitle)
-                    .setSmallIcon(R.drawable.logo_secret_notif)
-                    //                .setColor(Color.parseColor("#4B8A08"))
-                    //                .setVibrate(new long[]{1000, 500})
-                    //                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    //                .setLights(Color.RED, 3000, 3000)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
+                //NOTIFICATION
+                Notification notification = null;
+                notification = new Notification.Builder(this)
+                        .setContentTitle(title)
+                        .setContentText(subtitle)
+                        .setSmallIcon(R.drawable.logo_secret_notif)
+                        //                .setColor(Color.parseColor("#4B8A08"))
+                        //                .setVibrate(new long[]{1000, 500})
+                        //                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                        //                .setLights(Color.RED, 3000, 3000)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
+                        .build();
 
-            notificationManager.notify(id, notification);
+                notificationManager.notify(id, notification);
+                secretRepository.setGeoNotificationTimestamp(System.currentTimeMillis());
+            }
         }
     }
 }

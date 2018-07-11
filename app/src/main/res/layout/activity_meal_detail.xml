@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container_drink_detail"
+    android:id="@+id/container_meal_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
@@ -21,7 +21,7 @@
         tools:targetApi="lollipop">
 
         <ImageView
-            android:id="@+id/image_drink_detail"
+            android:id="@+id/image_meal_detail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_image_detail"
             android:scaleType="centerCrop"
@@ -49,14 +49,13 @@
                     android:background="@color/colorPrimary">
 
                     <LinearLayout
-                        android:id="@+id/header_detail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:padding="16dp">
 
                         <es.bsalazar.secretcafe.utils.ImpactTextView
-                            android:id="@+id/name_drink_detail"
+                            android:id="@+id/name_meal_detail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
@@ -81,17 +80,17 @@
                         android:paddingRight="16dp">
 
                         <TextView
-                            android:id="@+id/drink_description_detail"
+                            android:id="@+id/meal_description_detail"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:text="@string/lorem_ipsum"
+                            tools:text="@string/lorem_ipsum"
                             android:textColor="@color/white2"
                             android:transitionName="@string/transitionName_description" />
 
                         <es.bsalazar.secretcafe.utils.ImpactTextView
-                            android:id="@+id/drink_price_detail"
+                            android:id="@+id/meal_price_detail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
@@ -119,7 +118,7 @@
             android:visibility="gone">
 
             <es.bsalazar.secretcafe.utils.ImpactTextView
-                android:id="@+id/sticky_name_drink_detail"
+                android:id="@+id/sticky_name_meal_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"

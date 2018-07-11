@@ -4,7 +4,6 @@ import android.content.Context;
 
 import es.bsalazar.secretcafe.app.drinks.DrinksViewModelFactory;
 import es.bsalazar.secretcafe.app.drinks.admin_drink.AddUpdateDrinkViewModelFactory;
-import es.bsalazar.secretcafe.app.drinks.detail.DrinkDetailViewModelFactory;
 import es.bsalazar.secretcafe.app.events.EventsViewModelFactory;
 import es.bsalazar.secretcafe.app.events.admin_event.AddUpdateEventViewModelFactory;
 import es.bsalazar.secretcafe.app.home.HomeViewModelFactory;
@@ -22,7 +21,7 @@ public class Injector {
 
 
 
-    private static SecretRepository provideSecretRepository(Context context){
+    public static SecretRepository provideSecretRepository(Context context){
         return SecretRepository.getInstance(
                 provideFirestoreManager(),
                 provideStorageManager(),
@@ -79,9 +78,5 @@ public class Injector {
 
     public static OffersViewModelFactory provideOffersViewModelFactory(){
         return new OffersViewModelFactory(provideFirestoreManager());
-    }
-
-    public static DrinkDetailViewModelFactory provideDrinkDetailViewModelFactory(Context context){
-        return new DrinkDetailViewModelFactory(provideSecretRepository(context), provideFirestoreManager());
     }
 }

@@ -2,9 +2,10 @@ package es.bsalazar.secretcafe.data.entities;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Meal {
+public class Meal implements Serializable {
 
     private String Id;
     private String Name;

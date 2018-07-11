@@ -42,6 +42,7 @@ import es.bsalazar.secretcafe.data.entities.Drink;
 import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
 import es.bsalazar.secretcafe.utils.Constants;
 import es.bsalazar.secretcafe.utils.ResultState;
+import es.bsalazar.secretcafe.utils.Tools;
 
 import static es.bsalazar.secretcafe.utils.Constants.EXTRA_KEY_DRINK_ID;
 
@@ -220,7 +221,7 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
         // Ordinary Intent for launching a new activity
         Intent intent = new Intent(getActivity(), DrinkDetailActivity.class);
         intent.putExtra(Constants.EXTRA_KEY_DRINK, drink);
-        intent.putExtra(Constants.EXTRA_KEY_BYTE_ARRAY, getByteArrayFromImageView((ImageView) sharedViews[1]));
+        intent.putExtra(Constants.EXTRA_KEY_BYTE_ARRAY, Tools.getByteArrayFromImageView((ImageView) sharedViews[1]));
 
         ActivityOptionsCompat multipleShared = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 Pair.create(sharedViews[0], getString(R.string.transitionName_cardBackground)),
@@ -237,31 +238,5 @@ public class DrinksFragment extends BaseFragment<DrinksViewModel> implements Dri
         intent.putExtra(EXTRA_KEY_DRINK_ID, drink.getId());
         startActivity(intent);
     }
-
     //endregion
-
-
-    @TargetApi(Build.VERSION_CODES.DONUT)
-    public static byte[] getByteArrayFromImageView(ImageView imageView) {
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        Bitmap bitmap = null;
-
-        try {
-            BitmapDrawable bitmapDrawable = ((BitmapDrawable) imageView.getDrawable());
-            if (bitmapDrawable != null)
-                bitmap = bitmapDrawable.getBitmap();
-
-        } catch (Exception e) {
-            imageView.buildDrawingCache();
-            bitmap = imageView.getDrawingCache();
-            imageView.buildDrawingCache(false);
-        }
-
-        if (bitmap != null) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            return stream.toByteArray();
-        } else
-            return null;
-    }
 }
