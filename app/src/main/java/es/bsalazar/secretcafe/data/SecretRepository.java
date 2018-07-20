@@ -36,21 +36,30 @@ public class SecretRepository {
     }
 
     //endregion
-    public MutableLiveData<Drink> getDrink(String drinkID){
+    public MutableLiveData<Drink> getDrink(String drinkID) {
         return firestoreManager.getDrinkv2(drinkID);
     }
 
-    public void setGeoNotificationTimestamp(long timestamp){
+    public void setGeoNotificationTimestamp(long timestamp) {
         preferencesManager.setGeoNotificationTimestamp(timestamp);
     }
 
-    public long getGeoNotificationTimestamp(){
+    public long getGeoNotificationTimestamp() {
         return preferencesManager.getGeoNotificationTimestamp();
+    }
+
+    public void saveImei(String imei) {
+        if (!preferencesManager.isIMEIsaved()) {
+            firestoreManager.saveImei(imei, isSaved -> {
+                if (isSaved)
+                    preferencesManager.setIMEIsaved();
+            });
+        }
     }
 
     //region Images references
 
-    public StorageReference getDrinkImageReference(String drinkID){
+    public StorageReference getDrinkImageReference(String drinkID) {
         return storageManager.getReferenceToDrinkImage(drinkID);
     }
 

@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,10 +19,6 @@ import es.bsalazar.secretcafe.data.entities.Event;
 import es.bsalazar.secretcafe.data.entities.Meal;
 import es.bsalazar.secretcafe.data.entities.Offer;
 
-/**
- * Created by borja.salazar on 16/03/2018.
- */
-
 public class FirestoreManager {
 
     private final String TAG = "Firestore Manager";
@@ -30,6 +27,8 @@ public class FirestoreManager {
     public static final String MEAL_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Meals";
     public static final String EVENTS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Events";
     public static final String OFFERS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Offers";
+    public static final String IMEIS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "IMEIS";
+    public static final String WINNERS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Winners";
 
     private FirebaseFirestore db;
     private static FirestoreManager instance;
@@ -373,6 +372,22 @@ public class FirestoreManager {
                 })
                 .addOnFailureListener(e -> {
                     listener.onDocumentSaved(null);
+                    Log.w(TAG, "Error writing document", e);
+                });
+    }
+
+    public void saveImei(String imei, final OnDocumentSavedListener<Boolean> listener) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("IMEI", imei);
+
+        db.collection(IMEIS_COLLECTION)
+                .add(map)
+                .addOnSuccessListener(documentReference -> {
+                    listener.onDocumentSaved(true);
+                    Log.w(TAG, "IMEI Saved" + documentReference.getId());
+                })
+                .addOnFailureListener(e -> {
+                    listener.onDocumentSaved(false);
                     Log.w(TAG, "Error writing document", e);
                 });
     }

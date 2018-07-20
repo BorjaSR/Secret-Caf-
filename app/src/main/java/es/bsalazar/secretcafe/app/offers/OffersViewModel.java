@@ -94,19 +94,19 @@ public class OffersViewModel extends BaseViewModel {
         });
     }
 
-    public MutableLiveData<List<Offer>> getOffersList() {
+    MutableLiveData<List<Offer>> getOffersList() {
         return offersList;
     }
 
-    public MutableLiveData<FirebaseResponse<Offer>> getAddOfferResponse() {
+    MutableLiveData<FirebaseResponse<Offer>> getAddOfferResponse() {
         return addOfferResponse;
     }
 
-    public MutableLiveData<FirebaseResponse<Offer>> getModifyOfferResponse() {
+    MutableLiveData<FirebaseResponse<Offer>> getModifyOfferResponse() {
         return modifyOfferResponse;
     }
 
-    public MutableLiveData<FirebaseResponse<Offer>> getRemoveOfferResponse() {
+    MutableLiveData<FirebaseResponse<Offer>> getRemoveOfferResponse() {
         return removeOfferResponse;
     }
 
@@ -114,7 +114,7 @@ public class OffersViewModel extends BaseViewModel {
         return deleteOfferResult;
     }
 
-    public MutableLiveData<ShowState> getEmptyList() {
+    MutableLiveData<ShowState> getEmptyList() {
         return emptyList;
     }
 }

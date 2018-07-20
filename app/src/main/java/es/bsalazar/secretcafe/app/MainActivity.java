@@ -2,6 +2,7 @@ package es.bsalazar.secretcafe.app;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +21,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.MenuItem;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.bsalazar.secretcafe.BuildConfig;
+import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.about.AboutActivity;
 import es.bsalazar.secretcafe.app.about.WhoWeAreActivity;
@@ -44,6 +47,7 @@ import es.bsalazar.secretcafe.app.meals.MealsFragment;
 import es.bsalazar.secretcafe.app.home.admin_home.EditCategoryFragment;
 import es.bsalazar.secretcafe.app.home.HomeFragment;
 import es.bsalazar.secretcafe.app.offers.OffersFragment;
+import es.bsalazar.secretcafe.data.SecretRepository;
 
 import static com.google.android.gms.location.Geofence.NEVER_EXPIRE;
 
@@ -66,11 +70,14 @@ public class MainActivity extends AppCompatActivity
     private GeofencingClient mGeofencingClient;
     private PendingIntent mGeofencePendingIntent;
     private ArrayList<Geofence> mGeofenceList;
+    private TelephonyManager tm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tm = ((TelephonyManager) getSystemService(this.TELEPHONY_SERVICE));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -94,13 +101,16 @@ public class MainActivity extends AppCompatActivity
         setInitialFragment();
         createGeofences();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE},
                     MY_PERMISSIONS_REQUEST_LOCATION);
 
-        } else
+        } else {
             registerGeofences();
+            registerImei();
+        }
     }
 
     @Override
@@ -162,8 +172,10 @@ public class MainActivity extends AppCompatActivity
                     if (premissionResponse != PackageManager.PERMISSION_GRANTED)
                         allGranted = false;
 
-                if (allGranted)
+                if (allGranted) {
                     registerGeofences();
+                    registerImei();
+                }
             }
         }
     }
@@ -237,7 +249,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void setNavigationItemChecked(){
+    private void setNavigationItemChecked() {
         String fragmentTag = getTagFromActualFragment();
 
         if (fragmentTag.equals(getString(R.string.TAG_HOME_FRAGMENT)) ||
@@ -257,9 +269,9 @@ public class MainActivity extends AppCompatActivity
             navigationView.setCheckedItem(R.id.nav_sales);
     }
 
-    private String getTagFromActualFragment(){
+    private String getTagFromActualFragment() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        return fragments.size() > 0 ? fragments.get(fragments.size() -1).getTag() : "";
+        return fragments.size() > 0 ? fragments.get(fragments.size() - 1).getTag() : "";
     }
 
     public void setActionBarTitle(String title) {
@@ -330,5 +342,12 @@ public class MainActivity extends AppCompatActivity
         mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
                 .addOnSuccessListener(this, aVoid -> Log.d("GEOFENCE", "Geofence añadido correctamente"))
                 .addOnFailureListener(e -> Log.e("GEOFENCE", "ERROR añadiendo geofence"));
+    }
+
+    @SuppressLint("MissingPermission")
+    @TargetApi(Build.VERSION_CODES.O)
+    private void registerImei() {
+        SecretRepository secretRepository = Injector.provideSecretRepository(this);
+        secretRepository.saveImei(tm.getImei());
     }
 }
