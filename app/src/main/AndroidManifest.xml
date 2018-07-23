@@ -69,6 +69,9 @@
         <activity
             android:name=".app.meals.detail.MealDetailActivity"
             android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".app.events.detail.EventDetailActivity"
+            android:theme="@style/AppTheme.Transparent"/>
 
         <service android:name=".app.GeofenceService"/>
 

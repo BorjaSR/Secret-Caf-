@@ -1,7 +1,9 @@
 package es.bsalazar.secretcafe.app.events;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +70,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventItemV
         holder.date.setText(parseDate(event.getDate()));
 
         StringBuilder timeBuilder = new StringBuilder(event.getStartTime());
-        if (event.getEndTime() != null) {
+        if (event.getEndTime() != null && !TextUtils.isEmpty(event.getEndTime())) {
             timeBuilder.append(" - ");
             timeBuilder.append(event.getEndTime());
         }
@@ -85,7 +87,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventItemV
 
         holder.click.setOnClickListener(view -> {
             if (onEventClickListener != null)
-                onEventClickListener.onClickEventListener(event);
+                onEventClickListener.onClickEventListener(event, holder.cv_item, holder.image);
         });
 
         if (BuildConfig.Admin)
@@ -159,6 +161,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventItemV
     class EventItemViewHolder extends RecyclerView.ViewHolder {
 
         //region Views
+        @BindView(R.id.cv_item)
+        CardView cv_item;
         @BindView(R.id.clickable_item)
         FrameLayout click;
         @BindView(R.id.event_image)
@@ -182,7 +186,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventItemV
     }
 
     public interface OnEventClickListener {
-        void onClickEventListener(Event event);
+        void onClickEventListener(Event event, View... sharedViews);
 
         void onLongClickEventListener(Event event);
     }

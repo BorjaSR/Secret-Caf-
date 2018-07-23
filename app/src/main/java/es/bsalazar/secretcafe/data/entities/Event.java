@@ -2,9 +2,10 @@ package es.bsalazar.secretcafe.data.entities;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Event {
+public class Event implements Serializable{
 
 
     private String Id;
