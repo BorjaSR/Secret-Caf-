@@ -1,6 +1,7 @@
 package es.bsalazar.secretcafe.app.home;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,20 +10,29 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
 import butterknife.BindView;
+import es.bsalazar.secretcafe.BuildConfig;
 import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.MainActivity;
 import es.bsalazar.secretcafe.app.base.BaseFragment;
+import es.bsalazar.secretcafe.app.scanner.ScannerActivity;
 import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
 import es.bsalazar.secretcafe.data.remote.FirestoreManager;
 import es.bsalazar.secretcafe.data.entities.Category;
 import es.bsalazar.secretcafe.utils.ShowState;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends BaseFragment<HomeViewModel> implements CategoriesAdapter.OnCategoryItemListener {
 
@@ -49,6 +59,9 @@ public class HomeFragment extends BaseFragment<HomeViewModel> implements Categor
         }
 
         performAnim = true;
+
+        if (BuildConfig.Admin)
+            setHasOptionsMenu(true);
     }
 
     @Override
@@ -68,6 +81,24 @@ public class HomeFragment extends BaseFragment<HomeViewModel> implements Categor
         setupSwipeRefresh();
 
         viewModel.loadCategories();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (menu.size() == 0)
+            inflater.inflate(R.menu.main_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_scanner:
+                startActivity(new Intent(getContext(), ScannerActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     //endregion
 
@@ -147,7 +178,7 @@ public class HomeFragment extends BaseFragment<HomeViewModel> implements Categor
         swipe.setRefreshing(showState == ShowState.SHOW);
     }
 
-    private void modifyCategoryToList(FirebaseResponse<Category> response){
+    private void modifyCategoryToList(FirebaseResponse<Category> response) {
         adapter.modifyCategory(response.getIndex(), response.getResponse());
     }
     //endregion

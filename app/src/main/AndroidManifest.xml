@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="es.bsalazar.secretcafe">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
@@ -72,6 +73,22 @@
         <activity
             android:name=".app.events.detail.EventDetailActivity"
             android:theme="@style/AppTheme.Transparent"/>
+
+        <!--SCANNER ACTIVITY-->
+        <activity
+            android:name=".app.scanner.ScannerActivity"
+            android:label="@string/title_activity_scanner"
+            android:theme="@style/AppTheme"/>
+
+        <!--DISCOUNTS ACTIVITY-->
+        <activity
+            android:name=".app.discounts.DiscountsActivity"
+            android:label="@string/title_activity_discounts"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".app.draw.DrawActivity"
+            android:label="@string/title_activity_draw"
+            android:theme="@style/AppTheme"/>
 
         <service android:name=".app.GeofenceService"/>
 

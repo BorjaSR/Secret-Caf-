@@ -88,8 +88,8 @@ dependencies {
     implementation "android.arch.lifecycle:runtime:$archComponentsVersion"
     implementation "android.arch.lifecycle:extensions:$archComponentsVersion"
     annotationProcessor "android.arch.lifecycle:compiler:$archComponentsVersion"
-    //StickyScroll
-    implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
+    //ZXING
+    implementation 'me.dm7.barcodescanner:zxing:1.9.3'
 }
 
 

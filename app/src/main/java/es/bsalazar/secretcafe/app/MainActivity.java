@@ -24,6 +24,8 @@ import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.transition.Fade;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -41,8 +43,11 @@ import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.about.AboutActivity;
 import es.bsalazar.secretcafe.app.about.WhoWeAreActivity;
+import es.bsalazar.secretcafe.app.discounts.DiscountsActivity;
+import es.bsalazar.secretcafe.app.draw.DrawActivity;
 import es.bsalazar.secretcafe.app.drinks.DrinksFragment;
 import es.bsalazar.secretcafe.app.events.EventsFragment;
+import es.bsalazar.secretcafe.app.events.admin_event.AddUpdateEventActivity;
 import es.bsalazar.secretcafe.app.meals.MealsFragment;
 import es.bsalazar.secretcafe.app.home.admin_home.EditCategoryFragment;
 import es.bsalazar.secretcafe.app.home.HomeFragment;
@@ -97,21 +102,31 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(5).setTitle(BuildConfig.Admin ?
+                getString(R.string.nav_title_draw) : getString(R.string.nav_title_draw_user));
 
         setInitialFragment();
         createGeofences();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE},
-                    MY_PERMISSIONS_REQUEST_LOCATION);
-
+        //REQUEST PERMISIONS AND CONTINUE WITH REGISTERS
+        if (BuildConfig.Admin) {
+            if (!haveAdminPermisions())
+                requestAdminPermisions();
+            else {
+                registerGeofences();
+                registerImei();
+            }
         } else {
-            registerGeofences();
-            registerImei();
+            if (!haveUserPermisions())
+                requestUserPermisions();
+            else {
+                registerGeofences();
+                registerImei();
+            }
         }
     }
+
+    //endregion
 
     @Override
     public void onBackPressed() {
@@ -146,6 +161,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_food && currentFragmentID != MEALS_FRAGMENT) {
             setFragment(MEALS_FRAGMENT, null);
+
+        } else if (id == R.id.nav_draw) {
+            startActivity(new Intent(this, BuildConfig.Admin ? DrawActivity.class : DiscountsActivity.class));
 
         } else if (id == R.id.nav_who_we_are) {
             startActivity(new Intent(this, WhoWeAreActivity.class));
@@ -279,6 +297,27 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setTitle(title);
     }
 
+    boolean haveUserPermisions() {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    boolean haveAdminPermisions() {
+        return haveUserPermisions() && ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    void requestUserPermisions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE},
+                MY_PERMISSIONS_REQUEST_LOCATION);
+    }
+
+    void requestAdminPermisions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA},
+                MY_PERMISSIONS_REQUEST_LOCATION);
+    }
+
     private void createGeofences() {
 
         //SECRET
@@ -291,28 +330,6 @@ public class MainActivity extends AppCompatActivity
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
                         Geofence.GEOFENCE_TRANSITION_EXIT)
                 .build());
-
-//        //RENAULT
-//        mGeofenceList.add(new Geofence.Builder()
-//                // Set the request ID of the geofence. This is a string to identify this
-//                // geofence.
-//                .setRequestId("1111")
-//                .setCircularRegion(40.5205859, -3.6627022, 200)
-//                .setExpirationDuration(NEVER_EXPIRE)
-//                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-//                        Geofence.GEOFENCE_TRANSITION_EXIT)
-//                .build());
-//
-//        //CASA
-//        mGeofenceList.add(new Geofence.Builder()
-//                // Set the request ID of the geofence. This is a string to identify this
-//                // geofence.
-//                .setRequestId("0000")
-//                .setCircularRegion(40.4374185, -3.6744753, 200)
-//                .setExpirationDuration(NEVER_EXPIRE)
-//                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-//                        Geofence.GEOFENCE_TRANSITION_EXIT)
-//                .build());
     }
 
     private GeofencingRequest getGeofencingRequest() {

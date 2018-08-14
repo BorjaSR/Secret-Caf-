@@ -54,15 +54,8 @@ public class GeofenceService extends IntentService {
 
                 List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
                 for (Geofence geofence : triggeringGeofences) {
-                    if (geofence.getRequestId().equals("1111")) {
-                        sendNotification(0x1111, type + ": Welcome to the work", "A currar pargela!");
-
-                    } else if (geofence.getRequestId().equals("0000")) {
-                        sendNotification(0x0000, type + ": Ya en casa!!", "Did someone bring the chimichangas???");
-
-                    } else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER && geofence.getRequestId().equals("2222")) {
+                    if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER && geofence.getRequestId().equals("2222"))
                         sendNotification(0x2222, getString(R.string.notif_title), getString(R.string.notif_msg));
-                    }
                 }
 
             } else {

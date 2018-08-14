@@ -7,35 +7,39 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/home"
-            android:title="Inicio" />
+            android:title="@string/nav_title_home" />
         <item
             android:id="@+id/nav_drinks"
             android:icon="@drawable/cocktail"
-            android:title="Bebidas" />
+            android:title="@string/nav_title_drinks" />
         <item
             android:id="@+id/nav_events"
             android:icon="@drawable/calendar_event"
-            android:title="Eventos" />
+            android:title="@string/nav_title_events" />
         <item
             android:id="@+id/nav_sales"
             android:icon="@drawable/sale"
-            android:title="Ofertas" />
+            android:title="@string/nav_title_sales" />
         <item
             android:id="@+id/nav_food"
             android:icon="@drawable/food"
-            android:title="Para comer" />
+            android:title="@string/nav_title_meals" />
+        <item
+            android:id="@+id/nav_draw"
+            android:icon="@drawable/trophy"
+            android:title="@string/nav_title_draw_user" />
     </group>
 
-    <item android:title="Nosotros">
+    <item android:title="@string/nav_title_item_we">
         <menu>
             <item
                 android:id="@+id/nav_who_we_are"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Quienes somos?" />
+                android:title="@string/nav_title_who_we_are" />
             <item
                 android:id="@+id/nav_about_us"
                 android:icon="@drawable/info"
-                android:title="Acerca de" />
+                android:title="@string/nav_title_about_us" />
         </menu>
     </item>
 

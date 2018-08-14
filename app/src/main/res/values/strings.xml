@@ -66,4 +66,18 @@
     <string name="transitionName_name">name_TN</string>
     <string name="transitionName_description">description_TN</string>
     <string name="transitionName_price">price_TN</string>
+    <string name="title_activity_scanner">Escaner</string>
+    <string name="title_activity_discounts">Mis descuentos</string>
+    <string name="title_activity_draw">Sortear descuentos</string>
+    <string name="scanner">Escanear</string>
+    <string name="nav_title_home">Inicio</string>
+    <string name="nav_title_drinks">Bebidas</string>
+    <string name="nav_title_events">Eventos</string>
+    <string name="nav_title_sales">Ofertas</string>
+    <string name="nav_title_meals">Para comer</string>
+    <string name="nav_title_draw">Sortear descuentos</string>
+    <string name="nav_title_draw_user">Mis descuentos</string>
+    <string name="nav_title_item_we">Nosotros</string>
+    <string name="nav_title_who_we_are">¿Quienes somos?</string>
+    <string name="nav_title_about_us">Acerca de</string>
 </resources>
