@@ -1,11 +1,16 @@
 package es.bsalazar.secretcafe.data.remote;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -193,6 +198,25 @@ public class FirestoreManager {
                             offersCollection.add(new Offer(doc.getId(), doc));
                         listener.onCollectionChange(offersCollection);
 
+                    }
+                });
+    }
+
+    public void getIMEIs(final OnCollectionChangedListener<String> listener) {
+        db.collection(IMEIS_COLLECTION)
+                .addSnapshotListener((value, e) -> {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+                    if (value != null) {
+                        ArrayList<String> imeis = new ArrayList<>();
+                        for (DocumentSnapshot doc : value){
+                            imeis.add(String.valueOf(doc.getData().get("IMEI")));
+                            Log.d(TAG, doc.getId() + " => " + doc.getData());
+                        }
+                        listener.onCollectionChange(imeis);
                     }
                 });
     }

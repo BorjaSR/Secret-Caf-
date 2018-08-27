@@ -2,6 +2,7 @@ package es.bsalazar.secretcafe;
 
 import android.content.Context;
 
+import es.bsalazar.secretcafe.app.draw.DrawViewModelFactory;
 import es.bsalazar.secretcafe.app.drinks.DrinksViewModelFactory;
 import es.bsalazar.secretcafe.app.drinks.admin_drink.AddUpdateDrinkViewModelFactory;
 import es.bsalazar.secretcafe.app.events.EventsViewModelFactory;
@@ -78,5 +79,9 @@ public class Injector {
 
     public static OffersViewModelFactory provideOffersViewModelFactory(){
         return new OffersViewModelFactory(provideFirestoreManager());
+    }
+
+    public static DrawViewModelFactory provideDrawViewModelFactory(Context context){
+        return new DrawViewModelFactory(provideFirestoreManager(), provideSecretRepository(context));
     }
 }

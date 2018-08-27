@@ -57,6 +57,11 @@ public class SecretRepository {
         }
     }
 
+    public void getIMEIs(FirestoreManager.OnCollectionChangedListener<String> listener){
+        firestoreManager.getIMEIs(listener);
+    }
+
+
     //region Images references
 
     public StorageReference getDrinkImageReference(String drinkID) {

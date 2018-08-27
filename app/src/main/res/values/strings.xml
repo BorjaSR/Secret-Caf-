@@ -80,4 +80,7 @@
     <string name="nav_title_item_we">Nosotros</string>
     <string name="nav_title_who_we_are">¿Quienes somos?</string>
     <string name="nav_title_about_us">Acerca de</string>
+    <string name="draw">Sortear</string>
+    <string name="draw_user_quantity">Hay %s usuarios activos.</string>
+    <string name="draw_how_much_users">¿A cuantos quieres premiar?</string>
 </resources>
