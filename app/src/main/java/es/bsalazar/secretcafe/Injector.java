@@ -82,6 +82,6 @@ public class Injector {
     }
 
     public static DrawViewModelFactory provideDrawViewModelFactory(Context context){
-        return new DrawViewModelFactory(provideFirestoreManager(), provideSecretRepository(context));
+        return new DrawViewModelFactory(provideFirestoreManager());
     }
 }
