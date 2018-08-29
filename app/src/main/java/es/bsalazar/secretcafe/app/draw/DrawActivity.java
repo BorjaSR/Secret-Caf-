@@ -42,7 +42,7 @@ public class DrawActivity extends AppCompatActivity {
         setupViewModel();
         observeViewModel();
 
-//        viewModel.obtainImeis();
+        viewModel.obtainImeis();
     }
 
     private void setupViewModel() {
@@ -52,7 +52,7 @@ public class DrawActivity extends AppCompatActivity {
     }
 
     private void observeViewModel() {
-//        viewModel.getIMEIsList().observe(this, this::actualizeInfo);
+        viewModel.getIMEIsList().observe(this, this::actualizeInfo);
     }
 
     private void actualizeInfo(List<String> imeis) {

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackground"
             android:gravity="center"
-            android:text="@string/draw_user_quantity"
+            tools:text="@string/draw_user_quantity"
             android:textColor="@color/white"
             android:textSize="14sp"/>
 
@@ -34,14 +34,10 @@
             android:textColor="@color/white"
             android:textSize="14sp"/>
 
-        <!--<com.xw.repo.BubbleSeekBar-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="40dp"-->
-            <!--app:bsb_max="300"-->
-            <!--app:bsb_progress="57"-->
-            <!--app:bsb_touch_to_seek="true"-->
-            <!--app:bsb_show_thumb_text="true" />-->
+        <SeekBar
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
