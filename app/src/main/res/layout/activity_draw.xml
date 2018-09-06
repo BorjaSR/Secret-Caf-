@@ -35,10 +35,22 @@
             android:textSize="14sp"/>
 
         <SeekBar
+            android:id="@+id/sb_quantity"
             android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/numberUserInfo"
+            android:layout_marginTop="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            android:gravity="center"
+            android:layout_gravity="center"
+            tools:text="12"
+            android:textColor="@color/white"
+            android:textSize="24sp"/>
     </LinearLayout>
 
     <LinearLayout

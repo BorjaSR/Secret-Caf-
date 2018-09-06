@@ -22,6 +22,5 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowContentTransitions">true</item>
-        <!--<item name="android:windowEnterTransition">@transition/test</item>-->
     </style>
 </resources>
