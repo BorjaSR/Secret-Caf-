@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +21,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.List;
@@ -29,10 +33,12 @@ import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.MainActivity;
 import es.bsalazar.secretcafe.app.base.BaseFragment;
 import es.bsalazar.secretcafe.app.offers.admin_offers.AddUpdateOfferActivity;
+import es.bsalazar.secretcafe.app.offers.detail.OfferDetailActivity;
 import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
 import es.bsalazar.secretcafe.data.entities.Offer;
 import es.bsalazar.secretcafe.utils.Constants;
 import es.bsalazar.secretcafe.utils.ShowState;
+import es.bsalazar.secretcafe.utils.Tools;
 
 public class OffersFragment extends BaseFragment<OffersViewModel> implements OffersAdapter.OnOfferClickListener {
 
@@ -158,8 +164,8 @@ public class OffersFragment extends BaseFragment<OffersViewModel> implements Off
 
     //region OnOfferClickListener implement
     @Override
-    public void onClickOfferListener(Offer offer) {
-
+    public void onClickOfferListener(Offer offer, View... sharedViews) {
+        animateIntent(offer, sharedViews);
     }
 
     @Override
@@ -210,6 +216,22 @@ public class OffersFragment extends BaseFragment<OffersViewModel> implements Off
                 }).create();
 
         alertDialog.show();
+    }
+
+    public void animateIntent(Offer offer, View... sharedViews) {
+
+        // Ordinary Intent for launching a new activity
+        Intent intent = new Intent(getActivity(), OfferDetailActivity.class);
+        intent.putExtra(Constants.EXTRA_KEY_OFFER, offer);
+        intent.putExtra(Constants.EXTRA_KEY_BYTE_ARRAY, Tools.getByteArrayFromImageView((ImageView) sharedViews[1]));
+
+        ActivityOptionsCompat multipleShared = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                Pair.create(sharedViews[0], getString(R.string.transitionName_cardBackground)),
+                Pair.create(sharedViews[1], getString(R.string.transitionName_image))
+        );
+
+        //Start the Intent
+        ActivityCompat.startActivity(getActivity(), intent, multipleShared.toBundle());
     }
     //endregion
 }

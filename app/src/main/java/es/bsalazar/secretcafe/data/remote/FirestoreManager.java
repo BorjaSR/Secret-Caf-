@@ -5,12 +5,18 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +29,7 @@ import es.bsalazar.secretcafe.data.entities.Drink;
 import es.bsalazar.secretcafe.data.entities.Event;
 import es.bsalazar.secretcafe.data.entities.Meal;
 import es.bsalazar.secretcafe.data.entities.Offer;
+import es.bsalazar.secretcafe.data.entities.Winner;
 
 public class FirestoreManager {
 
@@ -212,7 +219,7 @@ public class FirestoreManager {
 
                     if (value != null) {
                         ArrayList<String> imeis = new ArrayList<>();
-                        for (DocumentSnapshot doc : value){
+                        for (DocumentSnapshot doc : value) {
                             imeis.add(String.valueOf(doc.getData().get("IMEI")));
                             Log.d(TAG, doc.getId() + " => " + doc.getData());
                         }
@@ -259,7 +266,8 @@ public class FirestoreManager {
 
 
     public MutableLiveData<Drink> getDrinkv2(String drinkID) {
-        MutableLiveData<Drink> drinkAsked = new MutableLiveData<Drink>(){};
+        MutableLiveData<Drink> drinkAsked = new MutableLiveData<Drink>() {
+        };
 
         db.collection(DRINK_COLLECTION)
                 .document(drinkID)
@@ -330,6 +338,59 @@ public class FirestoreManager {
                         }
                     } else {
                         callback.onDocumentLoaded(null);
+                    }
+                });
+    }
+
+    public void getDiscountsByIMEI(String imei, OnCollectionLoadedListener<Winner> listener) {
+        db.collection(WINNERS_COLLECTION)
+                .whereEqualTo("imei", imei)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+
+                        ArrayList<Winner> winners = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            winners.add(new Winner(document.getId(), document));
+                        }
+                        listener.onCollectionLoaded(winners);
+
+                    } else {
+                        listener.onCollectionLoaded(new ArrayList<>());
+                    }
+                });
+    }
+
+
+    public void getDiscountRealtime(String discountID, final OnDocumentChangedListener<Winner> listener) {
+        db.collection(WINNERS_COLLECTION)
+                .document(discountID)
+                .addSnapshotListener((DocumentSnapshot value, FirebaseFirestoreException e) -> {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+                    if (value != null) {
+                        listener.onDocumentChanged(new Winner(value.getId(), value));
+                    }
+                });
+    }
+
+    public void getDiscountsByCode(String discountCode, OnDocumentLoadedListener<Winner> listener) {
+        db.collection(WINNERS_COLLECTION)
+                .whereEqualTo("discountCode", discountCode)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+
+                        if (task.getResult().getDocuments().size() == 1)
+                            listener.onDocumentLoaded(new Winner(task.getResult().getDocuments().get(0).getId(), task.getResult().getDocuments().get(0)));
+                        else
+                            listener.onDocumentLoaded(null);
+
+                    } else {
+                        listener.onDocumentLoaded(null);
                     }
                 });
     }
@@ -416,6 +477,20 @@ public class FirestoreManager {
                 });
     }
 
+    public void saveWinners(ArrayList<Winner> winners, final OnDocumentSavedListener<Boolean> listener) {
+        // Get a new write batch
+        WriteBatch batch = db.batch();
+
+        // Set the value of Winners
+        for (Winner winner : winners) {
+            DocumentReference nycRef = db.collection(WINNERS_COLLECTION).document();
+            batch.set(nycRef, winner);
+        }
+
+        // Commit the batch
+        batch.commit().addOnCompleteListener(task -> listener.onDocumentSaved(true));
+    }
+
     //endregion
 
     //region Update Entities
@@ -467,6 +542,18 @@ public class FirestoreManager {
                 .addOnSuccessListener(aVoid -> listener.onDocumentSaved(offer))
                 .addOnFailureListener(e -> listener.onDocumentSaved(null));
     }
+
+    public void changeDiscountStatus(Winner winner, final OnDocumentSavedListener<Winner> listener) {
+
+        HashMap<String, Object> map = winner.getMap();
+        map.put("status", Winner.DISCOUNT_SPENT);
+
+        db.collection(WINNERS_COLLECTION)
+                .document(winner.getId())
+                .set(map)
+                .addOnSuccessListener(aVoid -> listener.onDocumentSaved(new Winner()))
+                .addOnFailureListener(e -> listener.onDocumentSaved(null));
+    }
     //endregion
 
     //region Delete
@@ -502,9 +589,20 @@ public class FirestoreManager {
     //region Interfaces
     public interface OnCollectionChangedListener<T> {
         void onCollectionChange(List<T> collection);
+
         void onDocumentAdded(int index, T object);
+
         void onDocumentChanged(int index, T object);
+
         void onDocumentRemoved(int index, T object);
+    }
+
+    public interface OnCollectionLoadedListener<T> {
+        void onCollectionLoaded(List<T> collection);
+    }
+
+    public interface OnDocumentChangedListener<T> {
+        void onDocumentChanged(T object);
     }
 
     public interface OnDocumentLoadedListener<T> {

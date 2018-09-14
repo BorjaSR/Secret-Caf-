@@ -83,4 +83,12 @@
     <string name="draw">Sortear</string>
     <string name="draw_user_quantity">Hay %s usuarios activos.</string>
     <string name="draw_how_much_users">¿A cuantos quieres premiar?</string>
+    <string name="expired_on">Caduca el %s</string>
+    <string name="discount_accepted">¡Descuento canjeado!</string>
+    <string name="discount_rejected">Descuento denegado</string>
+    <string name="discount_accepted_detail">Este descuento ha sido validado y marcado como "usado".\nNo se podra volver a usar.</string>
+    <string name="discount_already_used_detail">Este descuento ya ha sido canjeado anteriormente.</string>
+    <string name="discount_expired_detail">Este descuento ha caducado.</string>
+    <string name="discount_not_exist_detail">El descuento escaneado no existe.</string>
+    <string name="some_went_wrong">Ups! Algo ha ido mal…</string>
 </resources>

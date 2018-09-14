@@ -12,4 +12,7 @@ public class Constants {
     public static final String EXTRA_KEY_MEAL  = "MEAL";
     public static final String EXTRA_KEY_EVENT  = "EVENT";
     public static final String EXTRA_KEY_OFFER  = "OFFER";
+    public static final String EXTRA_KEY_WINNER  = "WINNER";
+
+    public static final String EXTRA_KEY_SCANNER_RESULT  = "SCANNER_RESULT";
 }

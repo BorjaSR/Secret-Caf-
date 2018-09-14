@@ -13,9 +13,12 @@
 
     <color name="white">#fafafa</color>
     <color name="white2">#f9f9f9</color>
-    <color name="alphaColorPrimary">#b9303030</color>
-    <color name="alpha_white">#8fff</color>
+    <color name="gray">#b1b1b1</color>
     <color name="black">#000</color>
-    <color name="alpha">#0fff</color>
     <color name="red">#da291c</color>
+
+    <color name="alpha">#0fff</color>
+    <color name="alphaColorPrimary">#b9303030</color>
+    <color name="alpha_black">#c8000000</color>
+    <color name="alpha_white">#8fff</color>
 </resources>

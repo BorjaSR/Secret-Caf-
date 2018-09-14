@@ -12,5 +12,6 @@
     <dimen name="textSize_title_item">18sp</dimen>
     <dimen name="textSize_price_item">22sp</dimen>
     <dimen name="height_image_detail">175dp</dimen>
+    <dimen name="qr_code_size">225dp</dimen>
 
 </resources>

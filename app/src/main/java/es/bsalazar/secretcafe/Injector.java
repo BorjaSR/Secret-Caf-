@@ -2,6 +2,8 @@ package es.bsalazar.secretcafe;
 
 import android.content.Context;
 
+import es.bsalazar.secretcafe.app.discounts.DiscountViewModelFactory;
+import es.bsalazar.secretcafe.app.discounts.detail.DiscountDetailViewModelFactory;
 import es.bsalazar.secretcafe.app.draw.DrawViewModelFactory;
 import es.bsalazar.secretcafe.app.drinks.DrinksViewModelFactory;
 import es.bsalazar.secretcafe.app.drinks.admin_drink.AddUpdateDrinkViewModelFactory;
@@ -13,6 +15,7 @@ import es.bsalazar.secretcafe.app.meals.MealsViewModelFactory;
 import es.bsalazar.secretcafe.app.meals.admin_meal.AddUpdateMealViewModelFactory;
 import es.bsalazar.secretcafe.app.offers.OffersViewModelFactory;
 import es.bsalazar.secretcafe.app.offers.admin_offers.AddUpdateOfferViewModelFactory;
+import es.bsalazar.secretcafe.app.scanner.ScannerViewModelFactory;
 import es.bsalazar.secretcafe.data.SecretRepository;
 import es.bsalazar.secretcafe.data.local.PreferencesManager;
 import es.bsalazar.secretcafe.data.remote.FirestoreManager;
@@ -81,7 +84,18 @@ public class Injector {
         return new OffersViewModelFactory(provideFirestoreManager());
     }
 
-    public static DrawViewModelFactory provideDrawViewModelFactory(Context context){
+    public static DrawViewModelFactory provideDrawViewModelFactory(){
         return new DrawViewModelFactory(provideFirestoreManager());
+    }
+
+    public static DiscountViewModelFactory provideDiscountViewModelFactory(){
+        return new DiscountViewModelFactory(provideFirestoreManager());
+    }
+
+    public static ScannerViewModelFactory provideScannerViewModelFactory(){
+        return new ScannerViewModelFactory(provideFirestoreManager());
+    }
+    public static DiscountDetailViewModelFactory provideDiscountDetailViewModelFactory(){
+        return new DiscountDetailViewModelFactory(provideFirestoreManager());
     }
 }

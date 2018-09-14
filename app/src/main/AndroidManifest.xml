@@ -73,6 +73,12 @@
         <activity
             android:name=".app.events.detail.EventDetailActivity"
             android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".app.offers.detail.OfferDetailActivity"
+            android:theme="@style/AppTheme.Transparent"/>
+        <activity
+            android:name=".app.discounts.detail.DiscountDetailActivity"
+            android:theme="@style/AppTheme.Transparent"/>
 
         <!--SCANNER ACTIVITY-->
         <activity

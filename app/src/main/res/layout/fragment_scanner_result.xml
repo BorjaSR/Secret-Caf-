@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="center"
+    android:paddingBottom="75dp">
+
+    <ImageView
+        android:id="@+id/image_discount_accepted"
+        android:layout_width="200dp"
+        android:layout_height="220dp"
+        android:src="@drawable/accepted"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/image_discount_rejected"
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        android:src="@drawable/rejected"
+        android:visibility="gone"/>
+    
+    <es.bsalazar.secretcafe.utils.ImpactTextView
+        android:id="@+id/discount_result_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:text="@string/discount_rejected"/>
+
+    <TextView
+        android:id="@+id/discount_result_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:gravity="center"
+        android:textColor="@color/white2"
+        android:text="@string/discount_expired_detail"/>
+
+</LinearLayout>

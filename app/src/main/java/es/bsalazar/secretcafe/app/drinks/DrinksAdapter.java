@@ -87,7 +87,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
 //                @Override
 //                public void onAnimationEnd(Animation animation) {
 //                    if (onDrinkListener != null)
-//                        onDrinkListener.onClickDrinkListener(drink,
+//                        onDrinkListener.onClickDiscountListener(drink,
 //                                holder.cv_item,
 //                                holder.drink_image);
 //                }

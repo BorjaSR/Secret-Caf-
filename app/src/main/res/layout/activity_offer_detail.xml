@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container_event_detail"
+    android:id="@+id/container_offer_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
@@ -21,7 +21,7 @@
         tools:targetApi="lollipop">
 
         <ImageView
-            android:id="@+id/image_event_detail"
+            android:id="@+id/image_offer_detail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_image_detail"
             android:scaleType="centerCrop"
@@ -45,13 +45,13 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/event_header"
+                        android:id="@+id/offer_header"
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:orientation="vertical">
 
                         <es.bsalazar.secretcafe.utils.ImpactTextView
-                            android:id="@+id/name_event_detail"
+                            android:id="@+id/name_offer_detail"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -76,96 +76,40 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:background="@color/colorPrimary"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
 
+                    <TextView
+                        android:id="@+id/offer_description_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:textColor="@color/white2"
+                        android:transitionName="@string/transitionName_description"
+                        tools:text="@string/title_activity_discounts" />
 
                     <LinearLayout
+                        android:id="@+id/offer_products_container"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="10dp"/>
 
-                        <!--DATE-->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                    <es.bsalazar.secretcafe.utils.ImpactTextView
+                        android:id="@+id/offer_price_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize_price_item"
+                        android:transitionName="@string/transitionName_price"
+                        tools:text="5,50 €" />
 
-                            <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                app:srcCompat="@drawable/calendar_event" />
-
-                            <TextView
-                                android:id="@+id/event_date"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginStart="10dp"
-                                android:textColor="@color/white2"
-                                tools:text="26 Octubre 2018" />
-                        </LinearLayout>
-
-                        <!--TIME-->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
-                                app:srcCompat="@drawable/clock" />
-
-                            <TextView
-                                android:id="@+id/event_time"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginStart="10dp"
-                                android:textColor="@color/white2"
-                                tools:text="21:30 - 00:00" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="16dp"
-                        android:orientation="vertical"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp">
-
-                        <TextView
-                            android:id="@+id/event_description_detail"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:textColor="@color/white2"
-                            android:transitionName="@string/transitionName_description"
-                            tools:text="@string/lorem_ipsum" />
-
-                        <es.bsalazar.secretcafe.utils.ImpactTextView
-                            android:id="@+id/event_price_detail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginTop="5dp"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/textSize_price_item"
-                            android:transitionName="@string/transitionName_price"
-                            tools:text="5,50 €" />
-
-                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -178,7 +122,7 @@
             android:visibility="gone">
 
             <ImageView
-                android:id="@+id/sticky_image_event_detail"
+                android:id="@+id/sticky_image_offer_detail"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_image_detail"
                 android:layout_marginBottom="-105dp"
@@ -191,7 +135,7 @@
                 android:orientation="vertical">
 
                 <es.bsalazar.secretcafe.utils.ImpactTextView
-                    android:id="@+id/sticky_name_event_detail"
+                    android:id="@+id/sticky_name_offer_detail"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"

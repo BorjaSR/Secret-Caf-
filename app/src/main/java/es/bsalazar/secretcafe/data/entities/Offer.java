@@ -2,10 +2,11 @@ package es.bsalazar.secretcafe.data.entities;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-public class Offer {
+public class Offer implements Serializable{
 
     private String Id;
     private String Name;

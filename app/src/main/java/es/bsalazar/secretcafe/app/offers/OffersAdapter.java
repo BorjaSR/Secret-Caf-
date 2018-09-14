@@ -1,6 +1,7 @@
 package es.bsalazar.secretcafe.app.offers;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +74,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OfferItemV
 
         holder.click.setOnClickListener(view -> {
             if (onOfferClickListener != null)
-                onOfferClickListener.onClickOfferListener(offer);
+                onOfferClickListener.onClickOfferListener(offer, holder.cv_item, holder.image);
         });
 
         if (BuildConfig.Admin)
@@ -146,6 +147,8 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OfferItemV
     class OfferItemViewHolder extends RecyclerView.ViewHolder {
 
         //region Views
+        @BindView(R.id.cv_item)
+        CardView cv_item;
         @BindView(R.id.clickable_item)
         FrameLayout click;
         @BindView(R.id.offer_image)
@@ -167,7 +170,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.OfferItemV
     }
 
     public interface OnOfferClickListener {
-        void onClickOfferListener(Offer offer);
+        void onClickOfferListener(Offer offer, View... sharedViews);
 
         void onLongClickOfferListener(Offer offer);
     }

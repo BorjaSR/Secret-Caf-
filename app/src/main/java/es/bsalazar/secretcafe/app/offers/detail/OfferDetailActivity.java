@@ -1,4 +1,4 @@
-package es.bsalazar.secretcafe.app.events.detail;
+package es.bsalazar.secretcafe.app.offers.detail;
 
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -26,10 +27,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import es.bsalazar.secretcafe.R;
-import es.bsalazar.secretcafe.data.entities.Event;
+import es.bsalazar.secretcafe.data.entities.Offer;
 import es.bsalazar.secretcafe.utils.Constants;
 
-public class EventDetailActivity extends AppCompatActivity {
+public class OfferDetailActivity extends AppCompatActivity {
 
     private final SimpleDateFormat CURRENT_DATE_FORMAT =
             new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
@@ -38,42 +39,37 @@ public class EventDetailActivity extends AppCompatActivity {
     private final SimpleDateFormat DISPLAY_DATE_FORMAT =
             new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
-
     @BindView(R.id.scroll)
     ScrollView scroll;
     @BindView(R.id.sticky_header_detail)
     RelativeLayout sticky_header_detail;
-    @BindView(R.id.event_header)
-    LinearLayout event_header;
-    @BindView(R.id.sticky_name_event_detail)
+    @BindView(R.id.sticky_name_offer_detail)
     TextView sticky_name;
-    @BindView(R.id.sticky_image_event_detail)
+    @BindView(R.id.sticky_image_offer_detail)
     ImageView sticky_image;
-    @BindView(R.id.image_event_detail)
+    @BindView(R.id.image_offer_detail)
     ImageView image;
-    @BindView(R.id.name_event_detail)
+    @BindView(R.id.name_offer_detail)
     TextView name;
-    @BindView(R.id.event_description_detail)
+    @BindView(R.id.offer_description_detail)
     TextView description;
-    @BindView(R.id.event_price_detail)
+    @BindView(R.id.offer_price_detail)
     TextView price;
-    @BindView(R.id.event_date)
-    TextView event_date;
-    @BindView(R.id.event_time)
-    TextView event_time;
+    @BindView(R.id.offer_products_container)
+    LinearLayout products_container;
 
     private Unbinder unbinder;
-    private Event event;
+    private Offer offer;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_detail);
+        setContentView(R.layout.activity_offer_detail);
 
         unbinder = ButterKnife.bind(this);
 
-        event = (Event) getIntent().getSerializableExtra(Constants.EXTRA_KEY_EVENT);
+        offer = (Offer) getIntent().getSerializableExtra(Constants.EXTRA_KEY_OFFER);
         byte[] byteArray = getIntent().getByteArrayExtra(Constants.EXTRA_KEY_BYTE_ARRAY);
 
         if (byteArray != null) {
@@ -88,7 +84,7 @@ public class EventDetailActivity extends AppCompatActivity {
         setView();
     }
 
-    @OnClick(R.id.container_event_detail)
+    @OnClick(R.id.container_offer_detail)
     public void pressBackground() {
         onBackPressed();
     }
@@ -110,37 +106,29 @@ public class EventDetailActivity extends AppCompatActivity {
                 sticky_header_detail.setVisibility(View.GONE);
         });
 
-        if (event != null) {
-            name.setText(event.getName());
-            sticky_name.setText(event.getName());
-            description.setText(event.getDescription());
-            event_date.setText(parseDate(event.getDate()));
+        if (offer != null) {
+            name.setText(offer.getName());
+            sticky_name.setText(offer.getName());
+            description.setText(offer.getDescription());
 
-            StringBuilder timeBuilder = new StringBuilder(event.getStartTime());
-            if (event.getEndTime() != null && !TextUtils.isEmpty(event.getEndTime())) {
-                timeBuilder.append(" - ");
-                timeBuilder.append(event.getEndTime());
-            }
-            event_time.setText(timeBuilder.toString());
-
-            if (event.getPrice() > 0) {
-                NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(new Locale("es", "ES"));
-                price.setText(String.format(getString(R.string.ticket_event), formatoImporte.format(event.getPrice())));
-            } else {
-                price.setText(getString(R.string.free_event));
-            }
+            NumberFormat formatoImporte = NumberFormat.getCurrencyInstance(new Locale("es", "ES"));
+            price.setText(String.format(getString(R.string.ticket_event), formatoImporte.format(offer.getPrice())));
         }
+
+        //LIST OF PRODUCTS
+        products_container.removeAllViews();
+        for (String product : offer.getOffers())
+            products_container.addView(getProductView(product));
 
     }
 
-    private String parseDate(String original) {
-        String parseDate = "";
-        try {
-            parseDate = DISPLAY_DATE_FORMAT.format(CURRENT_DATE_FORMAT.parse(original));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    private View getProductView(String productOffer) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        ViewGroup ingredientView = (ViewGroup) inflater.inflate(R.layout.item_product_offer, null);
 
-        return parseDate;
+        ((TextView) ingredientView.findViewById(R.id.product_offer_name)).setText(productOffer);
+        ingredientView.setTag(productOffer);
+
+        return ingredientView;
     }
 }

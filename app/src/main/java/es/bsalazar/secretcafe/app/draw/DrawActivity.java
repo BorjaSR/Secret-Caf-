@@ -3,8 +3,11 @@ package es.bsalazar.secretcafe.app.draw;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SnapHelper;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
+import es.bsalazar.secretcafe.utils.ResultState;
 
 /**
  * Created by borja.salazar on 14/08/2018.
@@ -76,19 +80,28 @@ public class DrawActivity extends AppCompatActivity {
 
     private void setupViewModel() {
         viewModel = ViewModelProviders.of(this,
-                Injector.provideDrawViewModelFactory(this))
+                Injector.provideDrawViewModelFactory())
                 .get(DrawViewModel.class);
     }
 
     private void observeViewModel() {
         viewModel.getIMEIsList().observe(this, this::actualizeInfo);
+        viewModel.getDrawResult().observe(this, this::showDrawResult);
     }
 
     private void actualizeInfo(List<String> imeis) {
         info_users.setText(String.format(getString(R.string.draw_user_quantity), String.valueOf(imeis.size())));
         seekBar.setMax(imeis.size());
-        numberUserToDraw = (int)(imeis.size() * 0.2);
+        numberUserToDraw = (int) (imeis.size() * 0.2);
         seekBar.setProgress(numberUserToDraw);
+    }
+
+    private void showDrawResult(ResultState drawResult) {
+        if (drawResult == ResultState.OK)
+            Snackbar.make(seekBar, "Sorteo realizado con exito", Snackbar.LENGTH_SHORT).show();
+        else
+            Snackbar.make(seekBar, "Cagada!", Snackbar.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -105,7 +118,7 @@ public class DrawActivity extends AppCompatActivity {
 
     //region Events
     @OnClick(R.id.draw_button)
-    public void drawDiscount(){
+    public void drawDiscount() {
         viewModel.drawDiscounts(numberUserToDraw, new ArrayList<>());
     }
     //endregion
