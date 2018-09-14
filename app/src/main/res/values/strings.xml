@@ -91,4 +91,7 @@
     <string name="discount_expired_detail">Este descuento ha caducado.</string>
     <string name="discount_not_exist_detail">El descuento escaneado no existe.</string>
     <string name="some_went_wrong">Ups! Algo ha ido mal…</string>
+    <string name="available">Disponible</string>
+    <string name="spent">Canjeado</string>
+    <string name="expired">Caducado</string>
 </resources>

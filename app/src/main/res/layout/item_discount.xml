@@ -20,15 +20,29 @@
         android:paddingRight="16dp"
         android:paddingTop="10dp">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Descuento"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            android:layout_marginBottom="10dp"/>
+            android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Descuento"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"/>
+
+            <include android:id="@+id/label_available"
+                layout="@layout/label_available"/>
+            <include android:id="@+id/label_spent"
+                layout="@layout/label_spent"/>
+            <include android:id="@+id/label_expired"
+                layout="@layout/label_expired"/>
+
+        </LinearLayout>
         <TextView
             android:id="@+id/discount_expired"
             android:layout_width="wrap_content"

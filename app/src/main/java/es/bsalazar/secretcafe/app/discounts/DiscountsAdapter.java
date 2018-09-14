@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -51,6 +52,8 @@ public class DiscountsAdapter extends RecyclerView.Adapter<DiscountsAdapter.Drin
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM", new Locale("es", "ES"));
         holder.discount_expired.setText(String.format(mContext.getString(R.string.expired_on), sdf.format(winner.getExpiredDate())));
 
+        //TODO mostrar el Status del descuento
+
         holder.cv_item.setOnClickListener(v -> onDiscountListener.onClickDiscountListener(winner, holder.cv_item));
     }
 
@@ -59,7 +62,7 @@ public class DiscountsAdapter extends RecyclerView.Adapter<DiscountsAdapter.Drin
         return winners.size();
     }
 
-    public void setWinners(List<Winner> winners) {
+    void setWinners(List<Winner> winners) {
         this.winners = winners;
         notifyDataSetChanged();
     }
@@ -82,6 +85,12 @@ public class DiscountsAdapter extends RecyclerView.Adapter<DiscountsAdapter.Drin
         CardView cv_item;
         @BindView(R.id.discount_expired)
         TextView discount_expired;
+        @BindView(R.id.label_available)
+        LinearLayout label_available;
+        @BindView(R.id.label_spent)
+        LinearLayout label_spent;
+        @BindView(R.id.label_expired)
+        LinearLayout label_expired;
         //endregion
 
         DrinkItemViewHolder(View itemView) {

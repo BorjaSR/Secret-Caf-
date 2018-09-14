@@ -15,7 +15,9 @@
     <color name="white2">#f9f9f9</color>
     <color name="gray">#b1b1b1</color>
     <color name="black">#000</color>
+    <color name="green">#13c953</color>
     <color name="red">#da291c</color>
+    <color name="orange">#ea8b25</color>
 
     <color name="alpha">#0fff</color>
     <color name="alphaColorPrimary">#b9303030</color>
