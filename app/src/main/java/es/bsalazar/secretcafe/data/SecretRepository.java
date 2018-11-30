@@ -48,17 +48,17 @@ public class SecretRepository {
         return preferencesManager.getGeoNotificationTimestamp();
     }
 
-    public void saveImei(String imei) {
-        if (!preferencesManager.isIMEIsaved()) {
-            firestoreManager.saveImei(imei, isSaved -> {
+    public void saveImei(String instanceID) {
+        if (!preferencesManager.isInstanceIDsaved()) {
+            firestoreManager.saveInstanceID(instanceID, isSaved -> {
                 if (isSaved)
-                    preferencesManager.setIMEIsaved();
+                    preferencesManager.setInstanceIDsaved();
             });
         }
     }
 
     public void getIMEIs(FirestoreManager.OnCollectionChangedListener<String> listener){
-        firestoreManager.getIMEIs(listener);
+        firestoreManager.getInstanceID(listener);
     }
 
 

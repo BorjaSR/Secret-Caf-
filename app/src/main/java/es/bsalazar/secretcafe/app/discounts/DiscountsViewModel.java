@@ -25,8 +25,8 @@ public class DiscountsViewModel extends BaseViewModel{
         super(firestoreManager);
     }
 
-    void getMyDiscounts(String imei){
-        firestoreManager.getDiscountsByIMEI(imei, collection -> discounts.setValue(collection));
+    void getMyDiscounts(String instanceID){
+        firestoreManager.getDiscountsByInstanceID(instanceID, collection -> discounts.setValue(collection));
     }
 
     MutableLiveData<List<Winner>> getDiscounts() {

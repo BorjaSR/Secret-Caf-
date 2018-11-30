@@ -39,10 +39,4 @@
 
         </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
-    <!--<ImageView-->
-    <!--android:id="@+id/qr_code"-->
-    <!--android:layout_width="300dp"-->
-    <!--android:layout_height="300dp"-->
-    <!--android:layout_centerInParent="true"/>-->
-
 </RelativeLayout>

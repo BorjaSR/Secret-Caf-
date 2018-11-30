@@ -52,7 +52,25 @@ public class DiscountsAdapter extends RecyclerView.Adapter<DiscountsAdapter.Drin
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM", new Locale("es", "ES"));
         holder.discount_expired.setText(String.format(mContext.getString(R.string.expired_on), sdf.format(winner.getExpiredDate())));
 
-        //TODO mostrar el Status del descuento
+
+        //STATUS VIEWS ------------------------------------
+        holder.label_available.setVisibility(View.GONE);
+        holder.label_expired.setVisibility(View.GONE);
+        holder.label_spent.setVisibility(View.GONE);
+
+        if(winner.getExpiredDate() < System.currentTimeMillis()){
+            holder.label_expired.setVisibility(View.VISIBLE);
+
+        }else {
+            switch (winner.getStatus()) {
+                case Winner.DISCOUNT_PENDING:
+                    holder.label_available.setVisibility(View.VISIBLE);
+                    break;
+                case Winner.DISCOUNT_SPENT:
+                    holder.label_spent.setVisibility(View.VISIBLE);
+            }
+        }
+        //--------------------------------------------------
 
         holder.cv_item.setOnClickListener(v -> onDiscountListener.onClickDiscountListener(winner, holder.cv_item));
     }

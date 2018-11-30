@@ -16,7 +16,7 @@ public class Winner implements Serializable {
     public static final int DISCOUNT_SPENT = 1;
 
     private String id;
-    private String imei;
+    private String instanceID;
     private String discountCode;
     private long expiredDate;
     private int status;
@@ -24,8 +24,8 @@ public class Winner implements Serializable {
     public Winner() {
     }
 
-    public Winner(String imei, String discountCode, long timestamp) {
-        this.imei = imei;
+    public Winner(String instanceID, String discountCode, long timestamp) {
+        this.instanceID = instanceID;
         this.discountCode = discountCode;
         this.expiredDate = timestamp;
         this.status = DISCOUNT_PENDING;
@@ -34,7 +34,7 @@ public class Winner implements Serializable {
     public Winner(String id, DocumentSnapshot document){
         Winner winner = document.toObject(this.getClass());
         this.id = id;
-        this.imei = winner.getImei();
+        this.instanceID = winner.getInstanceID();
         this.discountCode = winner.getDiscountCode();
         this.expiredDate = winner.getExpiredDate();
         this.status = winner.getStatus();
@@ -50,12 +50,12 @@ public class Winner implements Serializable {
         this.id = id;
     }
 
-    public String getImei() {
-        return imei;
+    public String getInstanceID() {
+        return instanceID;
     }
 
-    public void setImei(String imei) {
-        this.imei = imei;
+    public void setInstanceID(String instanceID) {
+        this.instanceID = instanceID;
     }
 
     public String getDiscountCode() {
@@ -85,7 +85,7 @@ public class Winner implements Serializable {
     @Exclude
     public HashMap<String, Object> getMap(){
         HashMap<String, Object> map = new HashMap<>();
-        map.put("imei", this.imei);
+        map.put("instanceID", this.instanceID);
         map.put("discountCode", this.discountCode);
         map.put("expiredDate", this.expiredDate);
         map.put("status", this.status);

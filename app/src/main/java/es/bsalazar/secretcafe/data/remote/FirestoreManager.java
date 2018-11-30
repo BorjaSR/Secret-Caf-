@@ -1,21 +1,14 @@
 package es.bsalazar.secretcafe.data.remote;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
@@ -39,8 +32,8 @@ public class FirestoreManager {
     public static final String MEAL_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Meals";
     public static final String EVENTS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Events";
     public static final String OFFERS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Offers";
-    public static final String IMEIS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "IMEIS";
-    public static final String WINNERS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Winners";
+    private static final String INSTANCE_ID_COLLECTION = BuildConfig.FIREBASE_PREFIX + "InstanceIDs";
+    private static final String WINNERS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Winners";
 
     private FirebaseFirestore db;
     private static FirestoreManager instance;
@@ -209,8 +202,8 @@ public class FirestoreManager {
                 });
     }
 
-    public void getIMEIs(final OnCollectionChangedListener<String> listener) {
-        db.collection(IMEIS_COLLECTION)
+    public void getInstanceID(final OnCollectionChangedListener<String> listener) {
+        db.collection(INSTANCE_ID_COLLECTION)
                 .addSnapshotListener((value, e) -> {
                     if (e != null) {
                         Log.w(TAG, "Listen failed.", e);
@@ -218,12 +211,12 @@ public class FirestoreManager {
                     }
 
                     if (value != null) {
-                        ArrayList<String> imeis = new ArrayList<>();
+                        ArrayList<String> instanceIDs = new ArrayList<>();
                         for (DocumentSnapshot doc : value) {
-                            imeis.add(String.valueOf(doc.getData().get("IMEI")));
+                            instanceIDs.add(String.valueOf(doc.getData().get("instanceID")));
                             Log.d(TAG, doc.getId() + " => " + doc.getData());
                         }
-                        listener.onCollectionChange(imeis);
+                        listener.onCollectionChange(instanceIDs);
                     }
                 });
     }
@@ -342,9 +335,9 @@ public class FirestoreManager {
                 });
     }
 
-    public void getDiscountsByIMEI(String imei, OnCollectionLoadedListener<Winner> listener) {
+    public void getDiscountsByInstanceID(String instanceID, OnCollectionLoadedListener<Winner> listener) {
         db.collection(WINNERS_COLLECTION)
-                .whereEqualTo("imei", imei)
+                .whereEqualTo("instanceID", instanceID)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -461,11 +454,11 @@ public class FirestoreManager {
                 });
     }
 
-    public void saveImei(String imei, final OnDocumentSavedListener<Boolean> listener) {
+    public void saveInstanceID(String instanceID, final OnDocumentSavedListener<Boolean> listener) {
         Map<String, Object> map = new HashMap<>();
-        map.put("IMEI", imei);
+        map.put("instanceID", instanceID);
 
-        db.collection(IMEIS_COLLECTION)
+        db.collection(INSTANCE_ID_COLLECTION)
                 .add(map)
                 .addOnSuccessListener(documentReference -> {
                     listener.onDocumentSaved(true);

@@ -97,6 +97,7 @@
             android:theme="@style/AppTheme"/>
 
         <service android:name=".app.GeofenceService"/>
+        <service android:name=".app.NotificationsService"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

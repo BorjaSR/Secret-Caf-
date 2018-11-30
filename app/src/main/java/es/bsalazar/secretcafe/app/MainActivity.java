@@ -3,11 +3,12 @@ package es.bsalazar.secretcafe.app;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ActivityManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,20 +16,16 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
 import android.transition.Fade;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
@@ -47,7 +44,6 @@ import es.bsalazar.secretcafe.app.discounts.DiscountsActivity;
 import es.bsalazar.secretcafe.app.draw.DrawActivity;
 import es.bsalazar.secretcafe.app.drinks.DrinksFragment;
 import es.bsalazar.secretcafe.app.events.EventsFragment;
-import es.bsalazar.secretcafe.app.events.admin_event.AddUpdateEventActivity;
 import es.bsalazar.secretcafe.app.meals.MealsFragment;
 import es.bsalazar.secretcafe.app.home.admin_home.EditCategoryFragment;
 import es.bsalazar.secretcafe.app.home.HomeFragment;
@@ -75,14 +71,11 @@ public class MainActivity extends AppCompatActivity
     private GeofencingClient mGeofencingClient;
     private PendingIntent mGeofencePendingIntent;
     private ArrayList<Geofence> mGeofenceList;
-    private TelephonyManager tm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        tm = ((TelephonyManager) getSystemService(this.TELEPHONY_SERVICE));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,20 +101,26 @@ public class MainActivity extends AppCompatActivity
         setInitialFragment();
         createGeofences();
 
+        //TODO probar violentamente
+        if(!isMyServiceRunning(NotificationsService.class)){
+            Intent intent = new Intent(this, NotificationsService.class);
+            startService(intent);
+        }
+
         //REQUEST PERMISIONS AND CONTINUE WITH REGISTERS
         if (BuildConfig.Admin) {
             if (!haveAdminPermisions())
                 requestAdminPermisions();
             else {
                 registerGeofences();
-                registerImei();
             }
         } else {
+            registerID();
+
             if (!haveUserPermisions())
                 requestUserPermisions();
             else {
                 registerGeofences();
-                registerImei();
             }
         }
     }
@@ -138,7 +137,15 @@ public class MainActivity extends AppCompatActivity
             setNavigationItemChecked();
         }
     }
-
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -192,7 +199,6 @@ public class MainActivity extends AppCompatActivity
 
                 if (allGranted) {
                     registerGeofences();
-                    registerImei();
                 }
             }
         }
@@ -298,8 +304,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     boolean haveUserPermisions() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     boolean haveAdminPermisions() {
@@ -308,13 +313,13 @@ public class MainActivity extends AppCompatActivity
 
     void requestUserPermisions() {
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE},
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 MY_PERMISSIONS_REQUEST_LOCATION);
     }
 
     void requestAdminPermisions() {
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA},
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CAMERA},
                 MY_PERMISSIONS_REQUEST_LOCATION);
     }
 
@@ -363,8 +368,8 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressLint("MissingPermission")
     @TargetApi(Build.VERSION_CODES.O)
-    private void registerImei() {
+    private void registerID() {
         SecretRepository secretRepository = Injector.provideSecretRepository(this);
-        secretRepository.saveImei(tm.getImei());
+        secretRepository.saveImei(InstanceID.getInstance(this).getId());
     }
 }

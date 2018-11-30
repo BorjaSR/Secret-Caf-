@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cv_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -37,8 +37,10 @@
 
             <include android:id="@+id/label_available"
                 layout="@layout/label_available"/>
+
             <include android:id="@+id/label_spent"
                 layout="@layout/label_spent"/>
+
             <include android:id="@+id/label_expired"
                 layout="@layout/label_expired"/>
 

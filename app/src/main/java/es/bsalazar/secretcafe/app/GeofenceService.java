@@ -3,13 +3,10 @@ package es.bsalazar.secretcafe.app;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
-import android.util.StateSet;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
@@ -28,10 +25,6 @@ public class GeofenceService extends IntentService {
 
     public GeofenceService() {
         super("GEOFENCE SERVICE");
-    }
-
-    public GeofenceService(String name) {
-        super(name);
     }
 
     @Override

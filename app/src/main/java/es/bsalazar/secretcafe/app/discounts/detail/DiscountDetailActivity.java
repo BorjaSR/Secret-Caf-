@@ -73,13 +73,13 @@ public class DiscountDetailActivity extends AppCompatActivity {
         unbinder.unbind();
     }
 
-    private void setupViewModel(){
+    private void setupViewModel() {
         viewModel = ViewModelProviders.of(this,
                 Injector.provideDiscountDetailViewModelFactory())
                 .get(DiscountDetailViewModel.class);
     }
 
-    private void observeViewModel(){
+    private void observeViewModel() {
         viewModel.getDiscountStatus().observe(this, this::handleDiscountStatusChange);
     }
 
@@ -119,14 +119,25 @@ public class DiscountDetailActivity extends AppCompatActivity {
         return barcodeBitmap;
     }
 
-    private void handleDiscountStatusChange(int discountStatus){
-        if(discountStatus != this.discount.getStatus()){
-            if(discountStatus == Winner.DISCOUNT_SPENT)
-                discount_status_image.setVisibility(View.VISIBLE);
+    private void handleDiscountStatusChange(int discountStatus) {
+        if (discountStatus != this.discount.getStatus()) {
+            if (discountStatus == Winner.DISCOUNT_SPENT)
+                animateShowAccept();
+//                discount_status_image.setVisibility(View.VISIBLE);
             else
-                discount_status_image.setVisibility(View.GONE);
+                animateHideAccept();
+//                discount_status_image.setVisibility(View.GONE);
         }
 
         discount.setStatus(discountStatus);
+    }
+
+    private void animateShowAccept() {
+        discount_status_image.setVisibility(View.VISIBLE);
+        discount_status_image.animate().alpha(1).scaleXBy(2).scaleYBy(2).start();
+    }
+
+    private void animateHideAccept() {
+        discount_status_image.animate().alpha(0).start();
     }
 }
