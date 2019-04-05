@@ -1,4 +1,4 @@
-package es.bsalazar.secretcafe.app;
+package es.bsalazar.secretcafe.app.services;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -15,6 +15,7 @@ import java.util.List;
 
 import es.bsalazar.secretcafe.Injector;
 import es.bsalazar.secretcafe.R;
+import es.bsalazar.secretcafe.app.MainActivity;
 import es.bsalazar.secretcafe.data.SecretRepository;
 
 public class GeofenceService extends IntentService {

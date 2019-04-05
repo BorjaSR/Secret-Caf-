@@ -10,6 +10,7 @@ import es.bsalazar.secretcafe.app.base.BaseViewModel;
 import es.bsalazar.secretcafe.data.SecretRepository;
 import es.bsalazar.secretcafe.data.entities.Winner;
 import es.bsalazar.secretcafe.data.remote.FirestoreManager;
+import es.bsalazar.secretcafe.utils.ShowState;
 
 /**
  * Created by borja.salazar on 07/09/2018.
@@ -26,7 +27,11 @@ public class DiscountsViewModel extends BaseViewModel{
     }
 
     void getMyDiscounts(String instanceID){
-        firestoreManager.getDiscountsByInstanceID(instanceID, collection -> discounts.setValue(collection));
+        loadingProgress.setValue(ShowState.SHOW);
+        firestoreManager.getDiscountsByInstanceID(instanceID, collection -> {
+            loadingProgress.setValue(ShowState.HIDE);
+            discounts.setValue(collection);
+        });
     }
 
     MutableLiveData<List<Winner>> getDiscounts() {

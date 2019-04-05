@@ -21,6 +21,7 @@ import es.bsalazar.secretcafe.data.entities.Category;
 import es.bsalazar.secretcafe.data.entities.Drink;
 import es.bsalazar.secretcafe.data.entities.Event;
 import es.bsalazar.secretcafe.data.entities.Meal;
+import es.bsalazar.secretcafe.data.entities.Notification;
 import es.bsalazar.secretcafe.data.entities.Offer;
 import es.bsalazar.secretcafe.data.entities.Winner;
 
@@ -34,6 +35,7 @@ public class FirestoreManager {
     public static final String OFFERS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Offers";
     private static final String INSTANCE_ID_COLLECTION = BuildConfig.FIREBASE_PREFIX + "InstanceIDs";
     private static final String WINNERS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Winners";
+    private static final String NOTIFICATIONS_COLLECTION = BuildConfig.FIREBASE_PREFIX + "Notifications";
 
     private FirebaseFirestore db;
     private static FirestoreManager instance;
@@ -388,6 +390,36 @@ public class FirestoreManager {
                 });
     }
 
+
+    public void getNotifications(final OnCollectionChangedListener<Notification> listener) {
+        db.collection(NOTIFICATIONS_COLLECTION)
+                .addSnapshotListener((value, e) -> {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+                    if (value != null) {
+                        for (DocumentChange documentChange : value.getDocumentChanges()) {
+                            if (documentChange.getType() == DocumentChange.Type.ADDED) {
+                                listener.onDocumentAdded(documentChange.getNewIndex(), new Notification(documentChange.getDocument().getId(), documentChange.getDocument()));
+
+                            } else if (documentChange.getType() == DocumentChange.Type.MODIFIED) {
+                                listener.onDocumentChanged(documentChange.getNewIndex(), new Notification(documentChange.getDocument().getId(), documentChange.getDocument()));
+
+                            } else if (documentChange.getType() == DocumentChange.Type.REMOVED) {
+                                listener.onDocumentRemoved(documentChange.getOldIndex(), new Notification(documentChange.getDocument().getId(), documentChange.getDocument()));
+                            }
+                        }
+
+                        final ArrayList<Notification> notifications = new ArrayList<>();
+                        for (DocumentSnapshot doc : value)
+                            notifications.add(new Notification(doc.getId(), doc));
+                        listener.onCollectionChange(notifications);
+                    }
+                });
+    }
+
     //endregion
 
     //region Save Entities
@@ -425,10 +457,10 @@ public class FirestoreManager {
     }
 
     public void saveEvent(final Event event, final OnDocumentSavedListener<Event> listener) {
-        Map<String, Object> mealMap = event.getMap();
+        Map<String, Object> eventMap = event.getMap();
 
         db.collection(EVENTS_COLLECTION)
-                .add(mealMap)
+                .add(eventMap)
                 .addOnSuccessListener(documentReference -> {
                     event.setId(documentReference.getId());
                     listener.onDocumentSaved(event);
@@ -482,6 +514,20 @@ public class FirestoreManager {
 
         // Commit the batch
         batch.commit().addOnCompleteListener(task -> listener.onDocumentSaved(true));
+    }
+
+    public void saveNotification(Notification notification, final OnDocumentSavedListener<Boolean> listener) {
+
+        db.collection(NOTIFICATIONS_COLLECTION)
+                .add(notification.getMap())
+                .addOnSuccessListener(documentReference -> {
+                    listener.onDocumentSaved(true);
+                    Log.w(TAG, "Notification Saved" + documentReference.getId());
+                })
+                .addOnFailureListener(e -> {
+                    listener.onDocumentSaved(false);
+                    Log.w(TAG, "Error writing document", e);
+                });
     }
 
     //endregion

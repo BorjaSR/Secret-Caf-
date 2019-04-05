@@ -3,18 +3,18 @@ package es.bsalazar.secretcafe.app.events.admin_event;
 import android.arch.lifecycle.MutableLiveData;
 import android.net.Uri;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import es.bsalazar.secretcafe.app.base.BaseViewModel;
+import es.bsalazar.secretcafe.data.entities.Notification;
 import es.bsalazar.secretcafe.data.remote.FirestoreManager;
 import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Event;
 import es.bsalazar.secretcafe.utils.ResultState;
 import es.bsalazar.secretcafe.utils.ShowState;
 
-/**
- * Created by borja.salazar on 19/04/2018.
- */
-
-public class AddUpdateEventViewModel extends BaseViewModel {
+class AddUpdateEventViewModel extends BaseViewModel {
 
     private MutableLiveData<Event> eventToEdit = new MutableLiveData<Event>() {
     };
@@ -22,6 +22,7 @@ public class AddUpdateEventViewModel extends BaseViewModel {
     };
     private MutableLiveData<ResultState> editEventResult = new MutableLiveData<ResultState>() {
     };
+    private boolean notify = false;
 
     AddUpdateEventViewModel(FirestoreManager firestoreManager) {
         super(firestoreManager);
@@ -42,12 +43,14 @@ public class AddUpdateEventViewModel extends BaseViewModel {
                         public void onImageUploadedSuccess() {
                             loadingProgress.setValue(ShowState.HIDE);
                             saveEventResult.setValue(ResultState.OK);
+                            if(notify) notifyEvent(event);
                         }
 
                         @Override
                         public void onImageUploadedFailure() {
                             loadingProgress.setValue(ShowState.HIDE);
                             saveEventResult.setValue(ResultState.OK);
+                            if(notify) notifyEvent(event);
                         }
 
                         @Override
@@ -57,6 +60,7 @@ public class AddUpdateEventViewModel extends BaseViewModel {
                 } else {
                     loadingProgress.setValue(ShowState.HIDE);
                     saveEventResult.setValue(ResultState.OK);
+                    if(notify) notifyEvent(event);
 
                 }
             } else {
@@ -113,6 +117,23 @@ public class AddUpdateEventViewModel extends BaseViewModel {
         });
     }
 
+    private void notifyEvent(Event event){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date(System.currentTimeMillis()));
+        calendar.add(Calendar.MONTH, 1);
+
+        Notification notification = new Notification();
+        notification.setTitle(event.getName());
+        notification.setDescription(event.getDescription());
+        notification.setType(Notification.EVENT);
+        notification.setElementId(event.getId());
+        notification.setExpiredDate(calendar.getTimeInMillis());
+
+        firestoreManager.saveNotification(notification, document -> {
+            //Nothing to do
+        });
+    }
+
     MutableLiveData<Event> getEventToEdit() {
         return eventToEdit;
     }
@@ -123,5 +144,9 @@ public class AddUpdateEventViewModel extends BaseViewModel {
 
     MutableLiveData<ResultState> getEditEventResult() {
         return editEventResult;
+    }
+
+    void setNotify(boolean notify) {
+        this.notify = notify;
     }
 }

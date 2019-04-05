@@ -45,6 +45,10 @@ import es.bsalazar.secretcafe.utils.ResultState;
 import es.bsalazar.secretcafe.utils.ShowState;
 import es.bsalazar.secretcafe.utils.Tools;
 
+/*
+ * Created by Borja Salazar on 23/10/2018
+ */
+
 public class MealsFragment extends BaseFragment<MealsViewModel> implements MealsAdapter.OnMealClickListener {
 
     @BindView(R.id.swipe)

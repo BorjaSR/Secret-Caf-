@@ -94,4 +94,5 @@
     <string name="available">Disponible</string>
     <string name="spent">Canjeado</string>
     <string name="expired">Caducado</string>
+    <string name="notify_users">Notificar a los usuarios</string>
 </resources>

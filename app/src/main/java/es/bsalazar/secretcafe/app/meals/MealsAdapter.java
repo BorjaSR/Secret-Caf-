@@ -28,6 +28,10 @@ import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.data.remote.StorageManager;
 import es.bsalazar.secretcafe.data.entities.Meal;
 
+/*
+ * Created by Borja Salazar on 23/10/2018
+ */
+
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.MealItemViewHolder> {
 
     private OnMealClickListener onMealClickListener;

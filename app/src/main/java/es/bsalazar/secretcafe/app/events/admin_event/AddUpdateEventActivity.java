@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -60,6 +62,8 @@ public class AddUpdateEventActivity extends AppCompatActivity {
     TextInputEditText event_price;
     @BindView(R.id.event_description)
     TextInputEditText event_description;
+    @BindView(R.id.check_notify_user)
+    CheckBox check_notify_user;
 
     private Uri imagePath = null;
     private Unbinder unbinder;
@@ -86,6 +90,8 @@ public class AddUpdateEventActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(getString(R.string.title_activity_edit_event));
             viewModel.getEvent(eventID);
         }
+
+        check_notify_user.setOnCheckedChangeListener((buttonView, isChecked) -> viewModel.setNotify(isChecked));
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(event_name.getWindowToken(), 0);

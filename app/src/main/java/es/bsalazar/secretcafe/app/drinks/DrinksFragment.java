@@ -1,11 +1,8 @@
 package es.bsalazar.secretcafe.app.drinks;
 
-import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +10,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
+import es.bsalazar.secretcafe.BuildConfig;
+import es.bsalazar.secretcafe.Injector;
+import es.bsalazar.secretcafe.R;
+import es.bsalazar.secretcafe.app.MainActivity;
+import es.bsalazar.secretcafe.app.base.BaseFragment;
+import es.bsalazar.secretcafe.app.drinks.admin_drink.AddUpdateDrinkActivity;
+import es.bsalazar.secretcafe.app.drinks.detail.DrinkDetailActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -27,17 +31,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import butterknife.BindView;
-import es.bsalazar.secretcafe.BuildConfig;
-import es.bsalazar.secretcafe.Injector;
-import es.bsalazar.secretcafe.R;
-import es.bsalazar.secretcafe.app.MainActivity;
-import es.bsalazar.secretcafe.app.base.BaseFragment;
-import es.bsalazar.secretcafe.app.drinks.admin_drink.AddUpdateDrinkActivity;
-import es.bsalazar.secretcafe.app.drinks.detail.DrinkDetailActivity;
 import es.bsalazar.secretcafe.data.entities.Drink;
 import es.bsalazar.secretcafe.data.remote.FirebaseResponse;
 import es.bsalazar.secretcafe.utils.Constants;

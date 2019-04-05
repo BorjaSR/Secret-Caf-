@@ -75,9 +75,9 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinkItemV
         holder.drink_price.setText(formatoImporte.format(drink.getPrice()));
 
         holder.clickable_item.setOnClickListener((View view) -> {
-            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate_up_right);
-            animation.setFillAfter(true);
-            animation.setInterpolator(new AccelerateInterpolator());
+//            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.rotate_up_right);
+//            animation.setFillAfter(true);
+//            animation.setInterpolator(new AccelerateInterpolator());
 //            animation.setAnimationListener(new Animation.AnimationListener() {
 //                @Override
 //                public void onAnimationStart(Animation animation) {

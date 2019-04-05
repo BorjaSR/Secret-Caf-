@@ -134,7 +134,7 @@ public class DiscountDetailActivity extends AppCompatActivity {
 
     private void animateShowAccept() {
         discount_status_image.setVisibility(View.VISIBLE);
-        discount_status_image.animate().alpha(1).scaleXBy(2).scaleYBy(2).start();
+        discount_status_image.animate().alpha(1).start();
     }
 
     private void animateHideAccept() {

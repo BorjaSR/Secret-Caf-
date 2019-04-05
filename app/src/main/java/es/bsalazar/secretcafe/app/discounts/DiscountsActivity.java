@@ -31,6 +31,7 @@ import es.bsalazar.secretcafe.R;
 import es.bsalazar.secretcafe.app.discounts.detail.DiscountDetailActivity;
 import es.bsalazar.secretcafe.data.entities.Winner;
 import es.bsalazar.secretcafe.utils.Constants;
+import es.bsalazar.secretcafe.utils.ShowState;
 
 /**
  * Created by borja.salazar on 14/08/2018.
@@ -50,7 +51,7 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAda
     private DiscountsViewModel viewModel;
     private DiscountsAdapter adapter;
 
-    private boolean scheduleAnim = false;
+    private boolean scheduleAnim = true;
 
     @TargetApi(Build.VERSION_CODES.O)
     @Override
@@ -99,6 +100,11 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAda
 
     private void observeViewModel() {
         viewModel.getDiscounts().observe(this, this::handleDiscountResult);
+        viewModel.getLoadingProgress().observe(this, this::handleLoading);
+    }
+
+    private void handleLoading(ShowState showState) {
+        swipe.setRefreshing(showState == ShowState.SHOW);
     }
 
     private void handleDiscountResult(List<Winner> winners) {

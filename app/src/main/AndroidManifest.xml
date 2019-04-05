@@ -96,8 +96,8 @@
             android:label="@string/title_activity_draw"
             android:theme="@style/AppTheme"/>
 
-        <service android:name=".app.GeofenceService"/>
-        <service android:name=".app.NotificationsService"/>
+        <service android:name=".app.services.GeofenceService"/>
+        <service android:name=".app.services.NotificationsService"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

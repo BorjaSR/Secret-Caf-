@@ -12,6 +12,9 @@ import es.bsalazar.secretcafe.data.entities.Meal;
 import es.bsalazar.secretcafe.utils.ResultState;
 import es.bsalazar.secretcafe.utils.ShowState;
 
+/*
+ * Created by Borja Salazar on 23/10/2018
+ */
 
 class MealsViewModel extends BaseViewModel {
 

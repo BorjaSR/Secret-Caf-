@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import es.bsalazar.secretcafe.app.base.BaseViewModelFactory;
 import es.bsalazar.secretcafe.data.remote.FirestoreManager;
 
-/**
- * Created by borja.salazar on 13/04/2018.
+/*
+ * Created by Borja Salazar on 23/10/2018
  */
 
 public class MealsViewModelFactory extends BaseViewModelFactory {

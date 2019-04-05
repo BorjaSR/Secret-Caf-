@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -48,6 +50,8 @@ import es.bsalazar.secretcafe.app.meals.MealsFragment;
 import es.bsalazar.secretcafe.app.home.admin_home.EditCategoryFragment;
 import es.bsalazar.secretcafe.app.home.HomeFragment;
 import es.bsalazar.secretcafe.app.offers.OffersFragment;
+import es.bsalazar.secretcafe.app.services.GeofenceService;
+import es.bsalazar.secretcafe.app.services.NotificationsService;
 import es.bsalazar.secretcafe.data.SecretRepository;
 
 import static com.google.android.gms.location.Geofence.NEVER_EXPIRE;
@@ -124,7 +128,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-
     //endregion
 
     @Override
